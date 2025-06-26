@@ -16,6 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import android.media.MediaPlayer
 import com.example.livestate.ui.language_start.LanguageStartActivity
+import com.example.livestate.ui.weather_activity.WeatherActivityActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
@@ -42,7 +43,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun startIntro() {
-        showActivity(LanguageStartActivity::class.java)
+        showActivity(WeatherActivityActivity::class.java)
         finish()
     }
 

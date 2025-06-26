@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,4 +8,54 @@
     android:layout_height="match_parent"
     tools:context=".ui.weather_activity.WeatherActivityActivity">
 
+    <!-- Nút back -->
+    <ImageView
+        android:id="@+id/ic_back"
+        android:src="@drawable/ic_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Layout chứa nội dung -->
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Nhập tên thành phố -->
+        <EditText
+            android:id="@+id/etCity"
+            android:hint="Nhập tên thành phố"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Nút tìm kiếm -->
+        <Button
+            android:id="@+id/btnSearch"
+            android:text="Tìm kiếm thời tiết"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Kết quả cuộn được -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp">
+
+            <!-- Thay TextView bằng LinearLayout -->
+            <LinearLayout
+                android:id="@+id/weatherResultLayout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </ScrollView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
