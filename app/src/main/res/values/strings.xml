@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">LiveState</string>
+    <string name="this_is_item_sample">Ceci est un exemple d’élément !</string>
+    <string name="please_send_us">Please send us some feedback!</string>
+    <string name="write_some_feedback">Write some feedback</string>
+    <string name="this_action_can_contain_ads">This action may contain advertising</string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="There_is_no_email">Aucun client email installé.</string>
+    <string name="this_app_needs_permissions_below_to_work_properly">This app needs permissions below to work properly</string>
+    <string name="continue_permission">Continue</string>
+    <string name="allow_camera_access">Allow access</string>
+    <string name="permission">Permission</string>
+    <string name="allow_storage_access">Allow storage access</string>
+    <string name="oh_we_re_sorry">Oh, We’re sorry...</string>
+    <string name="much_appreciated">Much appreciated!</string>
+    <string name="your_feedback_is_welcome">Your feedback is welcome.</string>
+    <string name="your_support_is_our_biggest_motivation">Your support is our biggest motivation!</string>
+    <string name="title_intro_1">Supernatural Discovery Camera</string>
+    <string name="content_1">Inside your camera can be a whole other world. Explore it today!</string>
+    <string name="title_intro_2">Terrifying Ghost Sounds</string>
+    <string name="content_2">Ghostly whispers and unseen footsteps — prepare to be terrified.</string>
+    <string name="title_intro_3">Chilling Ghost Stories</string>
+    <string name="content_3">Haunted rooms, whispering spirits, and terrors in the dark.</string>
+    <string name="title_intro_4">Embrace the Unknown</string>
+    <string name="content_4">With the Holy Cross as your compass, the spiritual world opens before you.</string>
+    <string name="language">Language</string>
+    <string name="close">close</string>
+    <string name="rate_us">Rate us</string>
+    <string name="feedback">Feedback</string>
+    <string name="share">Share</string>
+    <string name="policy">Policy</string>
+    <string name="sound">Sound</string>
+    <string name="may_be_later">May be later</string>
+    <string name="next">Next</string>
+    <string name="start">Start</string>
+    <string name="setting">Settings</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+
+</resources>
