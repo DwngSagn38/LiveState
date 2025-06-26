@@ -18,5 +18,22 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="ItemMain" parent="Theme.AppCompat">
+        <item name="android:layout_width">180dp</item>
+        <item name="android:background">@drawable/bg_item_main</item>
+        <item name="android:layout_marginHorizontal">14dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="TextItemMain" parent="Theme.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/text_item</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/bevietnampro_600</item>
+    </style>
 
 </resources>

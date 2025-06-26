@@ -5,15 +5,282 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_home"
     tools:context=".ui.main.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="30dp"
+                android:drawableStart="@drawable/ic_live_state"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/bevietnampro_700"
+                android:includeFontPadding="false"
+                android:text="@string/app_name"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="14dp"
+                android:src="@drawable/ic_setting"
+                app:layout_constraintBottom_toBottomOf="@+id/tvApp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvApp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvApp">
+
+                <LinearLayout
+                    android:id="@+id/llEarth3D"
+                    style="@style/ItemMain"
+                    android:layout_marginTop="20dp"
+                    android:paddingVertical="50dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_earth_3d" />
+
+                    <TextView
+                        android:text="@string/earth_3d"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCameraLive"
+                    style="@style/ItemMain"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/llEarth3D">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_camera_live" />
+
+                    <TextView
+                        android:text="@string/camera_live"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llFamousPlace"
+                    style="@style/ItemMain"
+                    android:layout_marginTop="20dp"
+                    android:paddingVertical="50dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llCameraLive">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_famous_place" />
+
+                    <TextView
+                        android:text="@string/famous_place"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llNearbyPlaces"
+                    style="@style/ItemMain"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/llFamousPlace"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_nearby_places" />
+
+                    <TextView
+                        android:text="@string/nearby_places"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llRouterMap"
+                    android:layout_width="match_parent"
+                    style="@style/ItemMain"
+                    android:orientation="horizontal"
+                    android:gravity="start|center_vertical"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/llFamousPlace">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:src="@drawable/ic_route_map" />
+
+                    <TextView
+                        style="@style/TextItemMain"
+                        android:textAlignment="viewStart"
+                        android:text="@string/route_map" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llTraffic"
+                    style="@style/ItemMain"
+                    android:layout_marginTop="20dp"
+                    android:paddingVertical="50dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llRouterMap">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_traffic" />
+
+                    <TextView
+                        android:text="@string/traffic"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llMyLocation"
+                    style="@style/ItemMain"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/llTraffic">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_my_location" />
+
+                    <TextView
+                        android:text="@string/my_location"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llWeather"
+                    style="@style/ItemMain"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/llTraffic"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_weather" />
+
+                    <TextView
+                        android:text="@string/weather"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llWorldClock"
+                    style="@style/ItemMain"
+                    android:paddingVertical="10dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/llTraffic"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_world_clock" />
+
+                    <TextView
+                        android:text="@string/world_clock"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llSpeedometer"
+                    style="@style/ItemMain"
+                    android:paddingVertical="10dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/llWorldClock"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_speedometer" />
+
+                    <TextView
+                        android:text="@string/speedometer"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCompass"
+                    style="@style/ItemMain"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintTop_toTopOf="@+id/llWorldClock"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_compass" />
+
+                    <TextView
+                        android:text="@string/compass"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llConverter"
+                    style="@style/ItemMain"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintTop_toTopOf="@+id/llSpeedometer"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/ic_converter" />
+
+                    <TextView
+                        android:text="@string/converter"
+                        style="@style/TextItemMain"/>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
