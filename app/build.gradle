@@ -6,7 +6,9 @@ plugins {
 android {
     namespace 'com.example.livestate'
     compileSdk 34
-
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+    }
     defaultConfig {
         applicationId "com.example.livestate"
         minSdk 24

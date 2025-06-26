@@ -13,6 +13,9 @@
         android:theme="@style/Theme.LiveState"
         tools:targetApi="31">
         <activity
+            android:name=".ui.weather_activity.WeatherActivityActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.intro.IntroActivity"
             android:exported="false" />
         <activity
@@ -27,7 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.language_start.LanguageStartActivity"
             android:exported="false"
