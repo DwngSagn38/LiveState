@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LiveState</string>
+    <string name="app_name">Live State</string>
     <string name="this_is_item_sample">Ceci est un exemple d’élément !</string>
     <string name="please_send_us">Please send us some feedback!</string>
     <string name="write_some_feedback">Write some feedback</string>
@@ -38,5 +38,18 @@
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+
+    <string name="earth_3d">Earth 3D</string>
+    <string name="camera_live">Camera Live</string>
+    <string name="famous_place">Famous Place</string>
+    <string name="nearby_places">Nearby Places</string>
+    <string name="route_map">Route Map</string>
+    <string name="traffic">Traffic</string>
+    <string name="my_location">My Location</string>
+    <string name="weather">Weather</string>
+    <string name="world_clock">World Clock</string>
+    <string name="speedometer">Speedometer</string>
+    <string name="compass">Compass</string>
+    <string name="converter">Converter</string>
 
 </resources>

@@ -24,4 +24,7 @@
     <color name="main">#EAECF0</color>
     <color name="primary">#59D575</color>
 
+    <color name="text_item">#4F4F4F</color>
+
+
 </resources>
