@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_color">
+
+
+    <!-- Nút back -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:src="@drawable/icon_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/opensans_700"
+        android:text="@string/converter"
+        android:textColor="@color/cl_text_464646"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_top_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/edt_amount"
+            app:layout_constraintStart_toStartOf="@+id/edt_amount">
+            <TextView
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/tv_top_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:fontFamily="@font/opensans_600"
+                android:text="USD"
+                android:textColor="#2BB2EC"
+                />
+            <androidx.appcompat.widget.AppCompatImageView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_top_currency"
+                android:layout_width="28dp"
+                android:layout_marginBottom="4dp"
+                android:layout_height="28dp"
+                android:src="@drawable/icon_navigation_next_conner"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:text="USD"
+            android:id="@+id/tv_currency_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="#2A2A2A"
+            android:fontFamily="@font/opensans_400"
+            android:textSize="17sp"
+            android:layout_marginEnd="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/edt_amount"
+            />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textColor="#818181"
+            android:layout_marginEnd="6dp"
+            android:id="@+id/edt_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="65dp"
+            android:background="@null"
+            android:fontFamily="@font/opensans_500"
+            android:textColorHint="#C1C1C1"
+            android:gravity="end"
+            android:textSize="28sp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:digits="0123456789."
+            android:inputType="numberDecimal"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:layout_constraintBottom_toTopOf="@id/tv_result"
+            app:layout_constraintEnd_toStartOf="@+id/tv_currency_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_marginTop="2dp"
+            android:background="#787878"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_height="2dp"
+            app:layout_constraintTop_toBottomOf="@id/edt_amount"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_center_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/tv_result"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_result">
+            <TextView
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/tv_center_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:fontFamily="@font/opensans_600"
+                android:text="USD"
+                android:textColor="#2BB2EC"
+                />
+            <androidx.appcompat.widget.AppCompatImageView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_center_currency"
+                android:layout_width="28dp"
+                android:layout_marginBottom="4dp"
+                android:layout_height="28dp"
+                android:src="@drawable/icon_navigation_next_conner"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            app:layout_constraintBottom_toBottomOf="@+id/tv_result"
+            android:layout_marginEnd="20dp"
+            android:maxLines="1"
+            android:textColor="#2A2A2A"
+            android:textSize="17sp"
+            android:text="USD"
+            android:id="@+id/tv_currency_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_400"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+        <TextView
+            android:layout_marginEnd="10dp"
+            android:gravity="end"
+            android:textColor="#818181"
+            android:layout_marginStart="15dp"
+            android:textSize="28sp"
+            android:id="@+id/tv_result"
+            app:layout_constraintTop_toBottomOf="@id/edt_amount"
+            android:layout_marginTop="77dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_currency_center"
+            android:textColorHint="#C1C1C1"
+            android:fontFamily="@font/opensans_500"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            />
+        <View
+            android:layout_marginTop="2dp"
+            android:background="#787878"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="15dp"
+            android:layout_height="2dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_result"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="@string/update"
+            android:textSize="16sp"
+            android:textColor="#2A2A2A"
+            android:fontFamily="@font/opensans_600"
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_result"
+            app:layout_constraintStart_toStartOf="@+id/tv_result"/>
+
+
+
+<!--        <LinearLayout-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:id="@+id/LL_bt"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="256dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="5dp"-->
+<!--                android:layout_marginBottom="15dp"-->
+<!--                android:orientation="vertical"-->
+<!--                tools:layout_editor_absoluteX="16dp">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:gravity="center">-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_7"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="7"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_8"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="8"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_9"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="9"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:gravity="center">-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_4"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="4"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_5"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="5"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_6"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="6"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:gravity="center">-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_1"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="1"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_2"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="2"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_3"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="3"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:gravity="center">-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_0"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="0"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:fontFamily="@font/opensans_400"-->
+<!--                        android:id="@+id/tv_00"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="00"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="38sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_comma"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="80dp"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:background="@drawable/bg_item_number"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="."-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="40sp" />-->
+
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:orientation="vertical">-->
+
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/iv_delete"-->
+<!--                    android:layout_width="80dp"-->
+<!--                    android:layout_height="80dp"-->
+<!--                    android:background="@drawable/bg_operator"-->
+<!--                    android:gravity="center"-->
+<!--                    android:paddingHorizontal="24dp"-->
+<!--                    android:src="@drawable/icon_delete"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="31sp" />-->
+
+
+<!--                <ImageView-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:id="@+id/iv_change_convertor"-->
+<!--                    android:layout_width="80dp"-->
+<!--                    android:layout_height="124dp"-->
+<!--                    android:background="@drawable/bg_operator"-->
+<!--                    android:gravity="center"-->
+<!--                    android:paddingHorizontal="24dp"-->
+<!--                    android:src="@drawable/icon_change_conversion"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="31sp" />-->
+
+<!--                <androidx.appcompat.widget.AppCompatImageView-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:id="@+id/iv_equal"-->
+<!--                    android:layout_width="80dp"-->
+<!--                    android:layout_height="124dp"-->
+<!--                    android:background="@drawable/bg_operator"-->
+<!--                    android:gravity="center"-->
+<!--                    android:paddingHorizontal="24dp"-->
+<!--                    android:src="@drawable/icon_equal"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="31sp" />-->
+
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/bg_popup_currency"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/cl_bottom_sheet"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="270dp"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/select_currency"
+            android:textSize="20sp"
+            android:fontFamily="@font/opensans_700"
+            android:textColor="#2C2C2C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatImageView
+           android:padding="10dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/iv_close_bottomSheet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_close_bottomsheat_currenc"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_close_bottomSheet">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/cl_seach"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_seachview">
+
+                <EditText
+                    android:id="@+id/editTextSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="50dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/opensans_600"
+                    android:hint="@string/search"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_option_currency"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cl_seach" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

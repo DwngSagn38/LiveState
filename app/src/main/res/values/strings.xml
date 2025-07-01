@@ -51,5 +51,34 @@
     <string name="speedometer">Speedometer</string>
     <string name="compass">Compass</string>
     <string name="converter">Converter</string>
+    <string name="wind">wind</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="cloudiness">Cloudiness</string>
+    <string name="visibility">Visibility</string>
+    <string name="next_5_days">Next 5 days</string>
+    <string name="wind_gusts">Wind Gusts</string>
+    <string name="search_location">Search location</string>
+    <string name="grant_location_permission_to_view_details">You need to grant location permission to view details</string>
+    <string name="update">update:</string>
+    <string name="search">Search</string>
+    <string name="please_enter_a_valid_number">Please enter a valid number</string>
+    <string name="select_currency">Select Currency</string>
+    <string name="up_loc">up loc</string>
+    <string name="gps_on">GPS is on</string>
+    <string name="on">ON</string>
+    <string name="gps_off">Please turn on GPS</string>
+    <string name="location_service_disabled">Enable Location Services</string>
+    <string name="location_services_are_currently_off_Please_enable_them_to_continue">Location services are currently off. Please enable them to continue.</string>
+    <string name="FlashlightOff">Flashlight Turned Off</string>
+    <string name="FlashlightOn">Flashlight Turned On</string>
+    <string name="camera_compass">Camera Compass</string>
+    <string name="angle">Angle</string>
+    <string name="magnetic_field">Magnetic Field</string>
+    <string name="true_heading">True Heading</string>
+    <string name="axis">Axis</string>
+    <string name="location_not_available">Location not available</string>
+    <string name="camera_permission_required">Camera permission is required to continue</string>
+    <string name="grant_both_camera_location">You need to grant both Camera and Location permissions to continue</string>
 
 </resources>

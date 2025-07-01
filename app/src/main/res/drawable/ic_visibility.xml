@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+  <path
+      android:pathData="M31.931,15.647C30.684,12.576 27.448,9.031 23.486,7.236C21.219,6.208 18.7,5.688 16,5.688C13.3,5.688 10.781,6.208 8.513,7.236C4.537,9.038 1.313,12.588 0.069,15.647C-0.023,15.873 -0.023,16.127 0.069,16.353C1.321,19.431 4.556,22.971 8.513,24.764C10.781,25.792 13.3,26.313 16,26.313C18.7,26.313 21.219,25.792 23.486,24.764C27.455,22.966 30.686,19.417 31.931,16.353C32.023,16.127 32.023,15.873 31.931,15.647Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="16"
+          android:startY="26.313"
+          android:endX="16"
+          android:endY="5.688"
+          android:type="linear">
+        <item android:offset="0" android:color="#FF5558FF"/>
+        <item android:offset="1" android:color="#FF00C0FF"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M16,7.563C11.348,7.563 7.563,11.348 7.563,16C7.563,20.652 11.348,24.438 16,24.438C20.652,24.438 24.438,20.652 24.438,16C24.438,11.348 20.652,7.563 16,7.563ZM16,20.688C13.415,20.688 11.313,18.585 11.313,16C11.313,13.415 13.415,11.313 16,11.313C16.49,11.313 16.771,11.487 16.943,11.741C17.109,11.986 17.15,12.295 17.052,12.575C16.975,12.797 16.938,12.997 16.938,13.188C16.938,14.221 17.779,15.063 18.813,15.063C19.003,15.063 19.203,15.025 19.425,14.948C19.705,14.85 20.014,14.891 20.259,15.057C20.512,15.228 20.688,15.509 20.688,16C20.688,18.585 18.585,20.688 16,20.688Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="16"
+          android:startY="24.438"
+          android:endX="16"
+          android:endY="7.563"
+          android:type="linear">
+        <item android:offset="0" android:color="#FFADDCFF"/>
+        <item android:offset="0.503" android:color="#FFEAF6FF"/>
+        <item android:offset="1" android:color="#FFEAF6FF"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+</vector>
