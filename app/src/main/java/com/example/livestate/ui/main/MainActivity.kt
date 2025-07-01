@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.example.livestate.R
 import com.example.livestate.base.BaseActivity
 import com.example.livestate.databinding.ActivityMainBinding
+import com.example.livestate.ui.Speedometer.SpeedometerActivity
 import com.example.livestate.ui.cameracompass.CameraCompassActivity
 import com.example.livestate.ui.currency.CurrencyActivity
 import com.example.livestate.ui.setting.SettingActivity
@@ -73,6 +74,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             showActivity(CurrencyActivity::class.java)
         }
 
+        binding.llSpeedometer.tap {
+            showActivity(SpeedometerActivity::class.java)
+        }
+
         binding.llCompass.tap {
             if (hasAllPermissions()) {
                 showActivity(CameraCompassActivity::class.java)
@@ -80,7 +85,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 requestPermissionLauncher.launch(
                     arrayOf(
                         Manifest.permission.CAMERA,
-                        Manifest.permission.ACCESS_FINE_LOCATION
                     )
                 )
             }
@@ -88,25 +92,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        // Chỉ xử lý quyền của WeatherActivity (ACCESS_FINE_LOCATION)
-        if (requestCode == 2001) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showActivity(WeatherActivity::class.java)
-            } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.grant_location_permission_to_view_details),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        if (requestCode == 2001 && grantResults.isNotEmpty()
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            showActivity(WeatherActivity::class.java)
+        } else {
+            Toast.makeText(this, getString(R.string.grant_location_permission_to_view_details), Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun hasAllPermissions(): Boolean {
         return ContextCompat.checkSelfPermission(
