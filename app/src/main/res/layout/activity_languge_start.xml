@@ -20,7 +20,7 @@
         <TextView
             android:textColor="@color/main"
             android:textSize="16sp"
-            android:fontFamily="@font/bevietnampro_700"
+            android:fontFamily="@font/opensans_700"
             android:id="@+id/tv_language"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

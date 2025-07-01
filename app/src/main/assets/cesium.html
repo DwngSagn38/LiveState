@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cesium Globe</title>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+
+    <style>
+        html, body, #cesiumContainer { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; }
+        #toggleBtn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #toggleBtn:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .cesium-viewer-geocoderContainer {
+            display: none !important;
+        }
+
+    </style>
+</head>
+<body>
+<div id="cesiumContainer"></div>
+
+<script>
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzk5ZWE0OC0xNDU1LTRmZDgtOWFkZC0xOTZhZDg0NmMwNGEiLCJpZCI6MzE1MDIwLCJpYXQiOjE3NTA3MzU3Mzh9.epaGvJB3b_lTO7U556-_sgfAjt8w8jxaYjLwTtqIv-Y';
+
+    const isWebGLSupported = (function () {
+        try {
+            const canvas = document.createElement("canvas");
+            return !!window.WebGLRenderingContext && !!(canvas.getContext("webgl") || canvas.getContext("experimental-webgl"));
+        } catch (e) {
+            return false;
+        }
+    })();
+
+    if (!isWebGLSupported) {
+        alert("Thiết bị không hỗ trợ WebGL, không thể tải bản đồ.");
+    }
+
+    const osmProvider = new Cesium.OpenStreetMapImageryProvider({
+        url : 'https://a.tile.openstreetmap.org/'
+    });
+
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+        creditContainer: document.createElement("div"),
+        baseLayerPicker: false,
+        shouldAnimate: true,
+        shadows: false,  // Mặc định không đổ bóng ở chế độ ngày
+        terrainShadows: Cesium.ShadowMode.DISABLED,
+        timeline: false,       // ẨN timeline
+        animation: false,       // ẨN animation control
+        geocoder: true,
+        homeButton: false,
+        sceneModePicker: false,
+        navigationHelpButton: false,
+    });
+
+    viewer.scene.sun.show = true;
+    viewer.scene.moon.show = true;
+    viewer.scene.skyBox.show = true;
+    viewer.scene.skyAtmosphere.show = true;
+<!--    viewer.imageryLayers.addImageryProvider(osmProvider);-->
+
+    Cesium.IonImageryProvider.fromAssetId(3).then((imageryProvider) => {
+        viewer.imageryLayers.addImageryProvider(imageryProvider);
+        viewer.camera.flyHome(2.0);
+    }).catch((error) => {
+        console.error("Không thể tải imagery:", error);
+    });
+
+    function searchLocationFromAndroid(keyword) {
+        if (viewer.geocoder && viewer.geocoder.viewModel) {
+            viewer.geocoder.viewModel.searchText = keyword;
+            viewer.geocoder.viewModel.search();
+        } else {
+            alert("Geocoder not available");
+        }
+    }
+
+function getMyLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                const lon = position.coords.longitude;
+                const lat = position.coords.latitude;
+
+                viewer.entities.add({
+                    position: Cesium.Cartesian3.fromDegrees(lon, lat),
+                    billboard: {
+                        image: 'http://127.0.0.1:8080/draw/ic_location.png',
+                        width: 32,
+                        height: 32
+                    }
+                });
+
+                viewer.camera.flyTo({
+                    destination: Cesium.Cartesian3.fromDegrees(lon, lat, 10000)
+                });
+
+                // Gọi về Android thông báo đã xong
+                if (window.AndroidInterface) {
+                    window.AndroidInterface.onLocationFetched();
+                }
+            },
+            function(error) {
+                console.error("Không lấy được vị trí: ", error);
+                if (window.AndroidInterface) {
+                    window.AndroidInterface.onLocationFetched(); // Ẩn loading nếu thất bại
+                }
+            }
+        );
+    }
+}
+
+    function toggleLight(isMoon){
+        // Thêm layer city lights
+        const nightLayer = viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+            url: 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_CityLights_2012/default/2012-07-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg'
+        }));
+        nightLayer.show = false;
+
+       if (isMoon) {
+                // Ban đêm
+                viewer.clock.currentTime = Cesium.JulianDate.fromDate(new Date());
+                nightLayer.show = true;
+                viewer.scene.globe.enableLighting = true; // Ánh sáng mặt trời thực
+                viewer.shadows = true;
+                viewer.scene.globe.shadows = Cesium.ShadowMode.ENABLED;
+                viewer.terrainShadows = Cesium.ShadowMode.ENABLED;
+            } else {
+                // Ban ngày
+                viewer.clock.currentTime = Cesium.JulianDate.fromDate(new Date());
+                nightLayer.show = false;
+                viewer.scene.globe.enableLighting = false; // Tắt ánh sáng mặt trời, toàn bộ sáng
+                viewer.shadows = false;
+                viewer.scene.globe.shadows = Cesium.ShadowMode.DISABLED;
+                viewer.terrainShadows = Cesium.ShadowMode.DISABLED;
+            }
+    }
+
+    function zoomByPercent(percent) {
+        const camera = viewer.camera;
+        const scene = viewer.scene;
+
+        // Lấy trung tâm màn hình
+        const center = new Cesium.Cartesian2(scene.canvas.clientWidth / 2, scene.canvas.clientHeight / 2);
+
+        // Tính toán vị trí trong thế giới tại điểm trung tâm
+        const ray = camera.getPickRay(center);
+        const target = scene.globe.pick(ray, scene);
+
+        if (!target) {
+            console.warn("Không thể xác định điểm nhìn để zoom.");
+            return;
+        }
+
+        const direction = Cesium.Cartesian3.subtract(target, camera.positionWC, new Cesium.Cartesian3());
+        const distance = Cesium.Cartesian3.magnitude(direction);
+
+        // Tính khoảng cách zoom theo phần trăm (vd: 10% tiến/thoái)
+        const zoomDistance = distance * percent;
+
+        // Zoom: moveForward nếu percent > 0, moveBackward nếu < 0
+        if (percent > 0) {
+            camera.moveForward(zoomDistance);
+        } else {
+            camera.moveBackward(Math.abs(zoomDistance));
+        }
+    }
+
+    function zoomIn() {
+        zoomByPercent(0.15); // Zoom vào 10%
+    }
+
+    function zoomOut() {
+        zoomByPercent(-0.5); // Zoom ra 10%
+    }
+
+    function setImageryStyle(is2D) {
+        const layers = viewer.imageryLayers;
+
+        if (is2D) {
+            layers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider());
+            viewer.scene.morphTo2D(2.0);
+<!--            setTimeout(() => {-->
+<!--                getMyLocation();-->
+<!--            }, 3500);-->
+        } else {
+            // Morph sang 3D
+            viewer.scene.morphTo3D(2.0);
+
+            // Đợi morph hoàn tất rồi mới xử lý
+            const onMorphComplete = function () {
+                viewer.scene.morphComplete.removeEventListener(onMorphComplete);
+
+                // Tải imagery
+                Cesium.IonImageryProvider.fromAssetId(3).then((imageryProvider) => {
+                    // Đảm bảo imagery đã load xong, giờ mới xóa layer cũ
+                    layers.removeAll();
+                    layers.addImageryProvider(imageryProvider);
+                    viewer.camera.flyHome(2.0);
+                }).catch((error) => {
+                    console.error("Không thể tải imagery:", error);
+                });
+            };
+
+            viewer.scene.morphComplete.addEventListener(onMorphComplete);
+        }
+    }
+
+
+
+
+</script>
+</body>
+</html>

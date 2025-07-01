@@ -52,7 +52,7 @@
             android:includeFontPadding="false"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/bevietnampro_700"
+            android:fontFamily="@font/opensans_700"
             android:gravity="center"
             android:text="@string/next"
             android:textAllCaps="false"

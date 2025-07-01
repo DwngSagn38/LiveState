@@ -29,7 +29,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun initView() {
 
         croutineScope.launch {
-            delay(5000)
+            delay(2000)
             startIntro()
         }
     }
