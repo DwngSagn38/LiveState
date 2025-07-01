@@ -37,7 +37,7 @@
             android:layout_centerInParent="true"
             android:textColor="@color/main"
             android:textSize="16sp"
-            android:fontFamily="@font/bevietnampro_700"
+            android:fontFamily="@font/opensans_700"
             android:textAlignment="center"
             android:text="@string/language" />
 

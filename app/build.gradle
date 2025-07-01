@@ -62,5 +62,12 @@ dependencies {
 
 
 
+    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+
+    implementation 'org.maplibre.gl:android-sdk:11.8.5'
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+    implementation 'com.google.android.gms:play-services-location:21.1.0'
+
+
 
 }

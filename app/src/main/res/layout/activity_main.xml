@@ -27,7 +27,7 @@
                 android:layout_marginTop="30dp"
                 android:drawableStart="@drawable/ic_live_state"
                 android:drawablePadding="8dp"
-                android:fontFamily="@font/bevietnampro_700"
+                android:fontFamily="@font/opensans_700"
                 android:includeFontPadding="false"
                 android:text="@string/app_name"
                 android:textColor="@color/black"

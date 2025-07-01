@@ -83,7 +83,7 @@
                     android:maxLines="2"
                     android:textAlignment="center"
                     android:paddingHorizontal="10dp"
-                    android:fontFamily="@font/bevietnampro_700"
+                    android:fontFamily="@font/opensans_700"
                     android:text="@string/oh_we_re_sorry"
                     android:textSize="16sp" />
 
@@ -101,7 +101,7 @@
                     android:textColor="@color/black"
                     android:textAlignment="center"
                     android:text="@string/your_feedback_is_welcome"
-                    android:fontFamily="@font/bevietnampro_500"
+                    android:fontFamily="@font/opensans_500"
                     android:textSize="16sp" />
 
 

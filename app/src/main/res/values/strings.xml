@@ -46,10 +46,23 @@
     <string name="route_map">Route Map</string>
     <string name="traffic">Traffic</string>
     <string name="my_location">My Location</string>
+    <string name="location">Location</string>
     <string name="weather">Weather</string>
     <string name="world_clock">World Clock</string>
     <string name="speedometer">Speedometer</string>
     <string name="compass">Compass</string>
     <string name="converter">Converter</string>
+    <string name="enter_district_city_or_country">Enter district, city, or country</string>
+    <string name="enter_hotel_hospital">Enter Hotel, Hospital, or Police...</string>
+    <string name="copy">Copy</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="distance">Distance</string>
+    <string name="duration">Duration</string>
+    <string name="coped">Copied Location:</string>
+    <string name="share_location">Share My Location</string>
+    <string name="share_with">Share with</string>
+    <string name="turn_on_gps">Turn on GPS, please!</string>
+
 
 </resources>
