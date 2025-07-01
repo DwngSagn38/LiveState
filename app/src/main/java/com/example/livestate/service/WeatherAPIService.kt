@@ -10,6 +10,6 @@ interface WeatherAPIService {
     fun getForecast(
         @Query("key") key: String,
         @Query("q") city: String,
-        @Query("days") days: Int = 5
+        @Query("days") days: Int = 6
     ): Call<ForecastResponse>
 }

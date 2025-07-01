@@ -1,6 +1,7 @@
 package com.example.livestate.base
 
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.ActivityInfo
@@ -11,12 +12,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
@@ -25,6 +29,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.viewbinding.ViewBinding
 import com.example.livestate.utils.SystemUtil
 import com.example.livestate.view.dialog.PermissionDialog
+import raw.SoundManager
+import java.util.Locale
 
 
 abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
@@ -38,6 +44,8 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
     private var currentApiVersion = 0
     //isServiceBound dùng đẻ kểm tra xem service có được liên kết hay không
     private var isServiceBound= false
+    private var decimalSeparatorDisplay = ""
+    private var thousandsSeparatorDisplay = ""
 
 
     //kết nối với service
@@ -124,7 +132,62 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
         }
 
     }
+    fun getFormatNumber(number: Double, precision: Int, decimalSeparator: Int, thousandsSeparator: Int): String {
+        when (decimalSeparator) {
+            0 ->
+                decimalSeparatorDisplay = "."
 
+            1 ->
+                decimalSeparatorDisplay = ","
+        }
+        when (thousandsSeparator) {
+            0 ->
+                thousandsSeparatorDisplay = ""
+            1 ->
+                thousandsSeparatorDisplay = ", "
+
+            2 ->
+                thousandsSeparatorDisplay = " "
+
+            3 ->
+                thousandsSeparatorDisplay = ". "
+
+            4 ->
+                thousandsSeparatorDisplay = "'"
+        }
+        return formatNumber(number, precision, decimalSeparatorDisplay, thousandsSeparatorDisplay)
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun vibratePhone(context: Context) {
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+        }
+    }
+
+    fun SoundClick(context: Context) {
+        SoundManager(context)
+    }
+    fun formatNumber(
+        number: Double,
+        precision: Int,
+        decimalSeparator: String,
+        thousandsSeparator: String
+    ): String {
+        val validPrecision = precision.coerceIn(0, 6)
+
+        val rawFormatted = if (validPrecision == 0) {
+            "%.0f".format(Locale.US, number)
+        } else {
+            "%,.${validPrecision}f".format(Locale.US, number)
+        }
+
+        val converter = rawFormatted.replace(".", "?")
+            .replace(",", thousandsSeparator)
+            .replace("?", decimalSeparator)
+
+        return converter
+    }
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (currentApiVersion >= Build.VERSION_CODES.KITKAT && hasFocus){
@@ -184,11 +247,12 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-    open fun showDialogPermission(permission:Array<String>){
-        for (per in permission){
-            if (!checkPermission(per)){
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, per)){
+    open fun showDialogPermission(
+        permissions: Array<String>,
+    ) {
+        for (per in permissions) {
+            if (!checkPermission(per)) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, per)) {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri = Uri.fromParts(
                         "package",
@@ -196,12 +260,12 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
                         null
                     )
                     intent.data = uri
-                    val dialogPermission = PermissionDialog(this){
+                    val dialogPermission = PermissionDialog(this) {
                         requestPermissionActivity.launch(intent)
                     }
                     dialogPermission.show()
-                }else{
-                    requestPermissionLauncher.launch(permission)
+                } else {
+                    requestPermissionLauncher.launch(permissions)
                 }
                 return
             }
@@ -247,5 +311,10 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
             }
             startActivity(Intent.createChooser(shareIntent, "Share Image"))
         }
+    }
+    object check {
+        var checkChoosepinLocation: Int? = null
+        var checkChooseLocation: Int? = null
+        var checkPin:Int? = null
     }
 }

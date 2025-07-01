@@ -4,9 +4,12 @@
     <color name="white">#FFFFFF</color>
     <color name="color_242424">#242424</color>
     <color name="colorBlue">#2366FC</color>
+    <color name="app_bg_color">#F4FAFF</color>
+    <color name="cl_text_464646">#464646</color>
 
     <color name="color_5546FF">#5546FF</color>
     <color name="color_888888">#888888</color>
+    <color name="color_EEEEEE">#EEEEEE</color>
     <color name="color_1E232E">#1E232E</color>
     <color name="color_555555">#555555</color>
     <color name="color_BCBCBC">#BCBCBC</color>
