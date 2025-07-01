@@ -19,7 +19,6 @@ import com.example.livestate.ui.route_map.RouteMapActivity
 import com.example.livestate.ui.cameracompass.CameraCompassActivity
 import com.example.livestate.ui.currency.CurrencyActivity
 import com.example.livestate.ui.setting.SettingActivity
-import com.example.livestate.ui.weather_activity.WeatherActivityActivity
 import com.example.livestate.widget.tap
 import com.example.livestate.ui.weather_activity.WeatherActivity
 import com.example.livestate.ui.world_clock.WorldClockActivity
@@ -57,7 +56,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.apply {
             imgSetting.tap { showActivity(SettingActivity::class.java) }
-            llWeather.tap { showActivity(WeatherActivityActivity::class.java) }
+            llWeather.tap { showActivity(WeatherActivity::class.java) }
             llEarth3D.tap { checkLocationPermissionThenNavigate(TheEarthActivity::class.java) }
             llRouterMap.tap { checkLocationPermissionThenNavigate(RouteMapActivity::class.java) }
             llMyLocation.tap { checkLocationPermissionThenNavigate(MyLocationActivity::class.java) }
@@ -101,27 +100,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        // Chỉ xử lý quyền của WeatherActivity (ACCESS_FINE_LOCATION)
-        if (requestCode == 2001) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showActivity(WeatherActivity::class.java)
-            } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.grant_location_permission_to_view_details),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
     private fun hasAllPermissions(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
@@ -134,14 +112,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun checkLocationPermissionThenNavigate(targetActivity: Class<*>) {
-        if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
             PackageManager.PERMISSION_GRANTED
         ) {
             showActivity(targetActivity)
         } else {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 1001
             )
             pendingActivityClass = targetActivity
@@ -164,7 +142,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             pendingActivityClass = null
         } else {
-            Toast.makeText(this, "Bạn cần cấp quyền vị trí để tiếp tục", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.grant_location_permission_to_view_details),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
