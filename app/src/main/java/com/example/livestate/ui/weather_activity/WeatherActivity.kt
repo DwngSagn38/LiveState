@@ -22,6 +22,7 @@ import com.example.myapplication.model.GeoLocation
 import com.example.myapplication.model.WeatherResponse
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import okhttp3.OkHttpClient
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
@@ -30,6 +31,16 @@ import java.util.Locale
 
 class WeatherActivity : BaseActivity<ActivityWeatherActivityBinding>() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private fun createHttpClientWithUserAgent(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .header("User-Agent", "LiveStateWeatherApp/1.0 (livestate@example.com)")
+                    .build()
+                chain.proceed(request)
+            }
+            .build()
+    }
 
     private val openMeteoService = Retrofit.Builder()
         .baseUrl("https://api.open-meteo.com/")
@@ -43,16 +54,23 @@ class WeatherActivity : BaseActivity<ActivityWeatherActivityBinding>() {
         .build()
         .create(WeatherAPIService::class.java)
 
-    private val geoService = Retrofit.Builder()
-        .baseUrl("https://nominatim.openstreetmap.org/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(GeoCodingService::class.java)
-    private val geoService2 = Retrofit.Builder()
-        .baseUrl("https://nominatim.openstreetmap.org/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(GeoCodingService2::class.java)
+    private val geoService: GeoCodingService by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://nominatim.openstreetmap.org/")
+            .client(createHttpClientWithUserAgent())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(GeoCodingService::class.java)
+    }
+
+    private val geoService2: GeoCodingService2 by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://nominatim.openstreetmap.org/")
+            .client(createHttpClientWithUserAgent())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(GeoCodingService2::class.java)
+    }
 
 
     private val weatherApiKey = "49dd2b59043244258de75124252506"

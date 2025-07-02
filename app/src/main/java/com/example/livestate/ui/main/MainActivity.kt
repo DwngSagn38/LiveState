@@ -1,16 +1,19 @@
 package com.example.livestate.ui.main
 
-import android.content.pm.PackageManager
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.livestate.R
 import com.example.livestate.base.BaseActivity
 import com.example.livestate.databinding.ActivityMainBinding
+import com.example.livestate.ui.Speedometer.SpeedometerActivity
+import com.example.livestate.ui.cameracompass.CameraCompassActivity
+import com.example.livestate.ui.currency.CurrencyActivity
 import com.example.livestate.ui.earth3d.TheEarthActivity
 import com.example.livestate.ui.my_location.MyLocationActivity
 import com.example.livestate.ui.nearby_places.NearbyPlacesActivity
@@ -88,6 +91,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             showActivity(CurrencyActivity::class.java)
         }
 
+        binding.llSpeedometer.tap {
+            showActivity(SpeedometerActivity::class.java)
+        }
+
         binding.llCompass.tap {
             if (hasAllPermissions()) {
                 showActivity(CameraCompassActivity::class.java)
@@ -95,7 +102,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 requestPermissionLauncher.launch(
                     arrayOf(
                         Manifest.permission.CAMERA,
-                        Manifest.permission.ACCESS_FINE_LOCATION
                     )
                 )
             }
@@ -131,26 +137,38 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private var pendingActivityClass: Class<*>? = null
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1001 && grantResults.isNotEmpty() &&
-            grantResults[0] == PackageManager.PERMISSION_GRANTED
+
+        if (requestCode == 2001 && grantResults.isNotEmpty()
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED
         ) {
-            pendingActivityClass?.let {
-                showActivity(it)
-            }
-            pendingActivityClass = null
+            showActivity(WeatherActivity::class.java)
         } else {
             Toast.makeText(
                 this,
                 getString(R.string.grant_location_permission_to_view_details),
                 Toast.LENGTH_SHORT
             ).show()
+            if (requestCode == 1001 && grantResults.isNotEmpty() &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
+                pendingActivityClass?.let {
+                    showActivity(it)
+                }
+                pendingActivityClass = null
+            } else {
+                Toast.makeText(
+                    this,
+                    getString(R.string.grant_location_permission_to_view_details),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
+
+
 
     override fun dataObservable() {}
 }

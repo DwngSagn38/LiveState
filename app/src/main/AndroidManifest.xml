@@ -43,6 +43,9 @@
             android:name=".ui.earth3d.TheEarthActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.Speedometer.SpeedometerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.world_clock.WorldClockActivity"
             android:exported="false" />
         <activity
