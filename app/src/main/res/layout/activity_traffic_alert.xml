@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.traffic_alert.TrafficAlertActivity">
+
+
+    <org.maplibre.android.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="14dp"
+        android:padding="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/traffic"
+        app:layout_constraintTop_toTopOf="@+id/imgBack"
+        app:layout_constraintBottom_toBottomOf="@+id/imgBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18sp"
+        android:textColor="@color/main"
+        android:fontFamily="@font/opensans_700"/>
+
+    <LinearLayout
+        android:id="@+id/llSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/imgBack"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_text_show"
+        android:backgroundTint="@color/white">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgSearch2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search_1"
+            app:tint="#545F79"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/enter_hotel_hospital"
+            android:textColor="@color/text_item"
+            android:textColorHint="#545F79"
+            android:textSize="14sp"
+            android:fontFamily="@font/opensans_600"
+            android:background="@android:color/transparent"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:paddingEnd="16dp"
+            android:imeOptions="actionSearch"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_light"
+        app:layout_constraintTop_toBottomOf="@+id/llSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="24dp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgMyLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_my_location"
+        app:layout_constraintBottom_toTopOf="@+id/llZoom"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="14dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/llZoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/imgLight"
+        app:layout_constraintEnd_toEndOf="@+id/imgLight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/bg_zoom"
+        android:layout_marginBottom="90dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgAddZoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_add"
+            app:layout_constraintTop_toBottomOf="@+id/imgLight"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="4dp"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgMinusZoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_minus"
+            app:layout_constraintTop_toBottomOf="@+id/imgLight"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_zoom"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginBottom="30dp">
+
+        <TextView
+            android:id="@+id/tvFast"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/fast"
+            android:padding="14dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/opensans_400"
+            android:layout_marginHorizontal="12dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvSlow"
+            app:layout_constraintStart_toEndOf="@+id/tvFast"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#16D58F"
+                android:layout_marginHorizontal="2dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FECE44"
+                android:layout_marginHorizontal="2dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#F14E42"
+                android:layout_marginHorizontal="2dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#A82726"
+                android:layout_marginHorizontal="2dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSlow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/slow"
+            android:padding="14dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/opensans_400"
+            android:layout_marginHorizontal="12dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

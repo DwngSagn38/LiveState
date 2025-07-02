@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.traffic_alert.TrafficAlertActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.nearby_places.NearbyPlacesActivity"
             android:exported="false" />
         <activity

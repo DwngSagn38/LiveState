@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.util.Log
 import com.example.livestate.R
+import com.example.livestate.data.OpeningHoursParser
+import com.example.livestate.model.NearbyPlace
 import com.example.livestate.utils.helper.Contants
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.*
@@ -47,7 +49,7 @@ object MapHelper {
         onMapReadyDone: (() -> Unit)? = null,
 
     ) {
-        val styleBuilder = Style.Builder().fromUri(Contants.DEFAULT_MAP_STYLE)
+        val styleBuilder = Style.Builder().fromUri(Contants.MAP_STYLE_TRAFFIC)
 
         map.setStyle(styleBuilder) { style ->
             onMapReadyDone?.invoke()
@@ -109,6 +111,15 @@ object MapHelper {
             )
         }
 
+        map.animateCamera(
+            org.maplibre.android.camera.CameraUpdateFactory.newLatLngZoom(
+                org.maplibre.android.geometry.LatLng(lat, lng),
+                15.0
+            ), 1000
+        )
+    }
+
+    fun moveLocation(map: MapLibreMap, lat: Double, lng: Double){
         map.animateCamera(
             org.maplibre.android.camera.CameraUpdateFactory.newLatLngZoom(
                 org.maplibre.android.geometry.LatLng(lat, lng),
@@ -310,7 +321,7 @@ object MapHelper {
         lng: Double,
         keyword: String,
         radius: Int = 1000,
-        callback: (List<Point>) -> Unit
+        callback: (List<NearbyPlace>) -> Unit
     ) {
 
         val amenityMap = mapOf(
@@ -383,21 +394,61 @@ object MapHelper {
                     val json = JSONObject(bodyStr)
                     val elements = json.getJSONArray("elements")
 
-                    val points = mutableListOf<Point>()
+                    val places = mutableListOf<NearbyPlace>()
+
+                    var pending = elements.length()
+
+                    if (pending == 0) {
+                        callback(emptyList())
+                        return
+                    }
+
                     for (i in 0 until elements.length()) {
                         val el = elements.getJSONObject(i)
                         val latRes = el.getDouble("lat")
                         val lonRes = el.getDouble("lon")
-                        points.add(Point.fromLngLat(lonRes, latRes))
+                        val tags = el.optJSONObject("tags")
+
+                        val phone = tags?.optString("contact:phone")?.takeIf { it.isNotBlank() }
+                            ?: tags?.optString("phone")?.takeIf { it.isNotBlank() }
+
+                        val name = tags?.optString("name")?.takeIf { it.isNotBlank() }
+                        val openingHours = tags?.optString("opening_hours")?.takeIf { it.isNotBlank() }
+                        val isOpen = openingHours?.let {
+                            try {
+                                OpeningHoursParser.isOpenNow(it)
+                            } catch (e: Exception) {
+                                false
+                            }
+                        } ?: false
+
+                        // Không có địa chỉ => dùng reverseGeocode
+                        reverseGeocode(latRes, lonRes) { reverseAddress ->
+                            places.add(NearbyPlace(name, reverseAddress ?: "Unknown location", isOpen, latRes, lonRes, phone, openingHours ))
+                            pending--
+                            if (pending == 0) callback(places)
+                        }
                     }
 
-                    callback(points)
+
                 } catch (e: Exception) {
                     Log.e("OverpassAPI", "Parse error: ${e.message}")
                     callback(emptyList())
                 }
             }
         })
+    }
+
+
+    fun buildAddressFromTags(tags: JSONObject): String? {
+        return tags.optString("addr:full").takeIf { it.isNotBlank() }
+            ?: listOfNotNull(
+                tags.optString("addr:housenumber").takeIf { it.isNotBlank() },
+                tags.optString("addr:street").takeIf { it.isNotBlank() },
+                tags.optString("addr:suburb").takeIf { it.isNotBlank() },
+                tags.optString("addr:district").takeIf { it.isNotBlank() },
+                tags.optString("addr:city").takeIf { it.isNotBlank() }
+            ).takeIf { it.isNotEmpty() }?.joinToString(", ")
     }
 
 }
