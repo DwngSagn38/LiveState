@@ -19,6 +19,7 @@ import com.example.livestate.ui.route_map.RouteMapActivity
 import com.example.livestate.ui.cameracompass.CameraCompassActivity
 import com.example.livestate.ui.currency.CurrencyActivity
 import com.example.livestate.ui.setting.SettingActivity
+import com.example.livestate.ui.traffic_alert.TrafficAlertActivity
 import com.example.livestate.widget.tap
 import com.example.livestate.ui.weather_activity.WeatherActivity
 import com.example.livestate.ui.world_clock.WorldClockActivity
@@ -61,6 +62,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             llRouterMap.tap { checkLocationPermissionThenNavigate(RouteMapActivity::class.java) }
             llMyLocation.tap { checkLocationPermissionThenNavigate(MyLocationActivity::class.java) }
             llNearbyPlaces.tap { checkLocationPermissionThenNavigate(NearbyPlacesActivity::class.java) }
+            llTraffic.tap { checkLocationPermissionThenNavigate(TrafficAlertActivity::class.java) }
             imgSetting.tap {showActivity(SettingActivity::class.java) }
         }
 

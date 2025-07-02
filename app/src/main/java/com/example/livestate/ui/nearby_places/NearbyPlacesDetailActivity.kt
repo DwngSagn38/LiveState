@@ -1,20 +1,27 @@
 package com.example.livestate.ui.nearby_places
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.livestate.R
 import com.example.livestate.base.BaseActivity2
 import com.example.livestate.data.DataApp
 import com.example.livestate.databinding.ActivityNearbyPlacesDetailBinding
+import com.example.livestate.model.NearbyPlace
 import com.example.livestate.model.PlacesModel
+import com.example.livestate.ui.route_map.RouteMapActivity
 import com.example.livestate.utils.MapHelper
+import com.example.livestate.widget.gone
 import com.example.livestate.widget.invisible
 import com.example.livestate.widget.tap
+import com.example.livestate.widget.visible
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -91,12 +98,7 @@ class NearbyPlacesDetailActivity : BaseActivity2<ActivityNearbyPlacesDetailBindi
         ).addOnSuccessListener { location ->
             if (location != null) {
                 currentLocation = location
-                MapHelper.showUserLocation(
-                    mapLibreMap,
-                    location.latitude,
-                    location.longitude,
-                    BitmapFactory.decodeResource(resources, R.drawable.ic_location)
-                )
+                moveLocation(location.latitude, location.longitude,1)
 
                 location?.let {
                     val lat = it.latitude
@@ -104,12 +106,8 @@ class NearbyPlacesDetailActivity : BaseActivity2<ActivityNearbyPlacesDetailBindi
                     MapHelper.reverseGeocode(lat, lng) { placeName ->
                         runOnUiThread {
                             val cleanedText = cleanUnnamedRoad(placeName) ?: "$lat,$lng"
-                            binding.tvMyLocation.text = cleanedText
-                            binding.tvLatitude.text = lat.toString()
-                            binding.tvLongitude.text = lng.toString()
                             myLocation = cleanedText
-                            binding.progressBar.invisible()
-                            isLoading = true
+                            drawCircleWithRadius(LatLng(lat, lng), 2500.0)
                         }
                     }
                 }
@@ -119,18 +117,48 @@ class NearbyPlacesDetailActivity : BaseActivity2<ActivityNearbyPlacesDetailBindi
                     location.longitude,
                     keyword = currentPlace.name,
                     radius = 2500
-                ) { points ->
-                    if (points.isEmpty()) {
-                        Log.d("Nearby", "No nearby places found")
-                    } else {
-                        runOnUiThread {
-                            addMarkersToMap(points)
-                            val centerLatLng = LatLng(location.latitude, location.longitude)
-                            drawCircleWithRadius(centerLatLng, 2500.0)
-
-                        }
+                ) { nearbyPlaces  ->
+                    runOnUiThread {
+                        binding.progressBar.visible()
                     }
 
+                    runOnUiThread {
+
+                        if (nearbyPlaces.isEmpty()) {
+                            Log.d("Nearby", "No nearby places found")
+                            binding.tvEmpty.visible()
+                            binding.lottieNotFound.visible()
+                            binding.rcvPlace.invisible()
+                        } else {
+                            Log.d("Nearby", "List : ${nearbyPlaces}")
+                            binding.tvEmpty.invisible()
+                            binding.lottieNotFound.invisible()
+                            binding.rcvPlace.layoutManager = LinearLayoutManager(this)
+                            binding.rcvPlace.adapter = PlaceAdapter(this, nearbyPlaces,
+                                onCalling = {phone ->
+                                    if (phone.isNotEmpty()) {
+                                        val intent = Intent(Intent.ACTION_DIAL).apply {
+                                            data = Uri.parse("tel:$phone")
+                                        }
+                                        startActivity(intent)
+                                    } else {
+                                        Toast.makeText(this, getString(R.string.dont_have_number_phone), Toast.LENGTH_SHORT).show()
+                                    }
+                                },
+                                onDuration = {
+                                    val intent = Intent(this,RouteMapActivity::class.java)
+                                    intent.putExtra("location", it)
+                                    startActivity(intent)
+                                },
+                                onItemClick = {
+                                    moveLocation(it.lat,it.lng,2)
+                                }
+                            )
+
+                            addMarkersToMap(nearbyPlaces)
+                        }
+                        binding.progressBar.gone()
+                    }
                 }
 
             } else {
@@ -149,12 +177,12 @@ class NearbyPlacesDetailActivity : BaseActivity2<ActivityNearbyPlacesDetailBindi
         }
     }
 
-    private fun addMarkersToMap(points: List<Point>) {
+    private fun addMarkersToMap(points: List<NearbyPlace>) {
         points.forEach { point ->
             val icon = IconFactory.getInstance(this)
                 .fromResource(currentPlace.icon)
             val markerOptions = MarkerOptions()
-                .position(LatLng(point.latitude(), point.longitude()))
+                .position(LatLng(point.lat, point.lng))
                 .icon(icon)
             mapLibreMap.addMarker(markerOptions)
         }
@@ -205,8 +233,25 @@ class NearbyPlacesDetailActivity : BaseActivity2<ActivityNearbyPlacesDetailBindi
             coords.add(Point.fromLngLat(Math.toDegrees(lngRadians), Math.toDegrees(latRadians)))
         }
         coords.add(coords[0]) // Close the polygon
-
+        isLoading = true
         return Polygon.fromLngLats(listOf(coords))
     }
 
+
+    private fun moveLocation(lat: Double, lng: Double, type : Int){
+        if (type == 1){
+            MapHelper.showUserLocation(
+                mapLibreMap,
+                lat,
+                lng,
+                BitmapFactory.decodeResource(resources, R.drawable.ic_location)
+            )
+        }else{
+            MapHelper.moveLocation(
+                mapLibreMap,
+                lat,
+                lng
+            )
+        }
+    }
 }

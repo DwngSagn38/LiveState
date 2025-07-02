@@ -44,7 +44,7 @@
     <string name="famous_place">Famous Place</string>
     <string name="nearby_places">Nearby Places</string>
     <string name="route_map">Route Map</string>
-    <string name="traffic">Traffic</string>
+    <string name="traffic">Traffic Alert</string>
     <string name="my_location">My Location</string>
     <string name="location">Location</string>
     <string name="weather">Weather</string>
@@ -93,5 +93,17 @@
     <string name="location_not_available">Location not available</string>
     <string name="camera_permission_required">Camera permission is required to continue</string>
     <string name="grant_both_camera_location">You need to grant both Camera and Location permissions to continue</string>
+
+    <string name="durections">Durections</string>
+    <string name="call">Call</string>
+    <string name="not_found">Not found</string>
+    <string name="unknown">Unknown</string>
+    <string name="unknown_open">Opening hours not available</string>
+    <string name="dont_have_number_phone">This address don`t have number phone</string>
+    <string name="unable_to_determine_the_starting">Unable to determine the starting location.</string>
+    <string name="route_not_found">Route not found.</string>
+    <string name="destination_not_found">Destination not found.</string>
+    <string name="fast">Fast</string>
+    <string name="slow">Slow</string>
 
 </resources>

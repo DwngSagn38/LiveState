@@ -32,6 +32,7 @@ import com.example.livestate.databinding.ActivityRouteMapBinding
 import com.example.livestate.utils.MapHelper
 import com.example.livestate.widget.invisible
 import com.example.livestate.widget.tap
+import com.example.livestate.widget.visible
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -53,6 +54,7 @@ class RouteMapActivity : BaseActivity2<ActivityRouteMapBinding>(), CoroutineScop
     private lateinit var endAdapter: ArrayAdapter<String>
     private var isSelectingStart = false
     private var isLoading = false
+    private var adress :String = ""
 
     private val job = Job()
     override val coroutineContext: CoroutineContext
@@ -65,7 +67,10 @@ class RouteMapActivity : BaseActivity2<ActivityRouteMapBinding>(), CoroutineScop
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-
+        adress = intent.getStringExtra("location").orEmpty()
+        if (adress.isNotBlank()) {
+            binding.etEnd.setText(adress)
+        }
         startAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, mutableListOf())
         endAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, mutableListOf())
 
@@ -121,7 +126,7 @@ class RouteMapActivity : BaseActivity2<ActivityRouteMapBinding>(), CoroutineScop
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         if (!isGpsEnabled) {
-            Toast.makeText(this, "Vui lòng bật GPS", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.turn_on_gps), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -144,7 +149,9 @@ class RouteMapActivity : BaseActivity2<ActivityRouteMapBinding>(), CoroutineScop
                         runOnUiThread {
                             binding.etStart.setText(placeName ?: "$lat,$lng")
                             binding.progressBar.invisible()
-                            isLoading = true
+                            if (adress != "" || !adress.isNullOrEmpty()){
+                                lookRoad()
+                            }
                         }
                     }
                 }
@@ -164,33 +171,8 @@ class RouteMapActivity : BaseActivity2<ActivityRouteMapBinding>(), CoroutineScop
 
     override fun viewListener() {
         binding.imgBack.tap { finish() }
-        binding.btnFindRoute.setOnClickListener {
-            hideKeyboard()
-            val startText = binding.etStart.text.toString()
-            val endText = binding.etEnd.text.toString()
-
-            val startPointParsed = parsePoint(startText)
-            val endPointParsed = parsePoint(endText)
-
-            if (startPointParsed != null) {
-                handleEndPointAndDrawRoute(startPointParsed, endText, endPointParsed)
-            } else {
-                // Nếu không parse được, thử geocode startText
-                MapHelper.forwardGeocode(startText) { startPointGeocoded ->
-                    runOnUiThread {
-                        if (startPointGeocoded != null) {
-                            handleEndPointAndDrawRoute(startPointGeocoded, endText, endPointParsed)
-                        } else if (currentLocation != null) {
-                            // fallback cuối cùng
-                            val fallbackPoint = Point.fromLngLat(currentLocation!!.longitude, currentLocation!!.latitude)
-                            handleEndPointAndDrawRoute(fallbackPoint, endText, endPointParsed)
-
-                        } else {
-                            Toast.makeText(this, "Không thể xác định vị trí bắt đầu", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }
+        binding.btnFindRoute.tap {
+            lookRoad()
         }
 
         binding.etStart.setOnEditorActionListener { _, _, _ ->
@@ -233,6 +215,37 @@ class RouteMapActivity : BaseActivity2<ActivityRouteMapBinding>(), CoroutineScop
 
     }
 
+    private fun lookRoad(){
+        binding.progressBar.visible()
+        hideKeyboard()
+        val startText = binding.etStart.text.toString()
+        val endText = binding.etEnd.text.toString()
+
+        val startPointParsed = parsePoint(startText)
+        val endPointParsed = parsePoint(endText)
+
+        if (startPointParsed != null) {
+            handleEndPointAndDrawRoute(startPointParsed, endText, endPointParsed)
+        } else {
+            // Nếu không parse được, thử geocode startText
+            MapHelper.forwardGeocode(startText) { startPointGeocoded ->
+                runOnUiThread {
+                    if (startPointGeocoded != null) {
+                        handleEndPointAndDrawRoute(startPointGeocoded, endText, endPointParsed)
+                    } else if (currentLocation != null) {
+                        // fallback cuối cùng
+                        val fallbackPoint = Point.fromLngLat(currentLocation!!.longitude, currentLocation!!.latitude)
+                        handleEndPointAndDrawRoute(fallbackPoint, endText, endPointParsed)
+
+                    } else {
+                        Toast.makeText(this, getString(R.string.unable_to_determine_the_starting), Toast.LENGTH_SHORT).show()
+                        binding.progressBar.invisible()
+
+                    }
+                }
+            }
+        }
+    }
     private fun requestAndDrawRoute(start: Point, end: Point) {
         MapHelper.requestRoute(start, end) { points,distance, duration->
             runOnUiThread {
@@ -247,22 +260,24 @@ class RouteMapActivity : BaseActivity2<ActivityRouteMapBinding>(), CoroutineScop
                     val distanceText = SpannableStringBuilder().apply {
                         append(getString(R.string.distance))
                         val start = length
-                        append("$distanceKm km")
+                        append(": $distanceKm km")
                         setSpan(StyleSpan(Typeface.BOLD), start, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                     }
 
                     val durationText = SpannableStringBuilder().apply {
                         append(getString(R.string.distance))
                         val start = length
-                        append("$durationMin min")
+                        append(": $durationMin min")
                         setSpan(StyleSpan(Typeface.BOLD), start, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                     }
 
                     binding.tvDistance.text = distanceText
                     binding.tvDuration.text = durationText
                 } else {
-                    Toast.makeText(this, "Không tìm thấy đường đi", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.route_not_found) , Toast.LENGTH_SHORT).show()
                 }
+
+                binding.progressBar.invisible()
             }
         }
     }
@@ -276,8 +291,10 @@ class RouteMapActivity : BaseActivity2<ActivityRouteMapBinding>(), CoroutineScop
                     if (endPoint != null) {
                         requestAndDrawRoute(startPoint, endPoint)
                     } else {
-                        Toast.makeText(this, "Không thể tìm địa điểm đích", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.destination_not_found) , Toast.LENGTH_SHORT).show()
                     }
+                    binding.progressBar.invisible()
+
                 }
             }
         }
