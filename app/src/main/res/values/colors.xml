@@ -19,13 +19,14 @@
     <color name="color_C22E2E">#C22E2E</color>
     <color name="color_9AD5A6">#9AD5A6</color>
     <color name="color_42834F">#42834F</color>
+    <color name="color_2C2C2C">#2C2C2C</color>
     <color name="gray_300">#D0D5DD</color>
     <color name="bg_dialog">#0D101B</color>
     <color name="bg_item_language">#1D2939</color>
 
     <color name="red">#DE2525</color>
     <color name="green">#12AD0F</color>
-    <color name="main">#464646</color>
+    <color name="main">#2BB2EC</color>
     <color name="primary">#E7F6FF</color>
 
     <color name="text_item">#4F4F4F</color>

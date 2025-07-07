@@ -4,27 +4,36 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.example.livestate.R
 import com.example.livestate.data.OpeningHoursParser
 import com.example.livestate.model.NearbyPlace
 import com.example.livestate.utils.helper.Contants
-import com.google.android.gms.location.LocationServices
+import org.maplibre.android.geometry.LatLngBounds
+import org.maplibre.android.geometry.LatLng
 import kotlinx.coroutines.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okio.IOException
+import org.json.JSONArray
 import org.json.JSONObject
 import org.maplibre.android.MapLibre
 import org.maplibre.android.WellKnownTileServer
 import org.maplibre.android.maps.MapLibreMap
 import org.maplibre.android.maps.Style
+import org.maplibre.android.style.expressions.Expression.literal
 import org.maplibre.android.style.layers.LineLayer
 import org.maplibre.android.style.layers.PropertyFactory.*
 import org.maplibre.android.style.layers.RasterLayer
 import org.maplibre.android.style.layers.SymbolLayer
 import org.maplibre.android.style.sources.GeoJsonSource
 import org.maplibre.android.style.sources.RasterSource
+import org.maplibre.android.style.sources.TileSet
 import org.maplibre.geojson.Feature
 import org.maplibre.geojson.FeatureCollection
 import org.maplibre.geojson.LineString
@@ -40,6 +49,8 @@ object MapHelper {
         .writeTimeout(10, TimeUnit.SECONDS)
         .build()
 
+    private val calledPoints = mutableSetOf<String>()
+
     fun initMapLibre(context: Context) {
         MapLibre.getInstance(context, null, WellKnownTileServer.MapLibre)
     }
@@ -47,9 +58,8 @@ object MapHelper {
     fun loadMap(
         map: MapLibreMap,
         onMapReadyDone: (() -> Unit)? = null,
-
     ) {
-        val styleBuilder = Style.Builder().fromUri(Contants.MAP_STYLE_TRAFFIC)
+        val styleBuilder = Style.Builder().fromUri(Contants.DEFAULT_MAP_STYLE)
 
         map.setStyle(styleBuilder) { style ->
             onMapReadyDone?.invoke()
@@ -80,12 +90,36 @@ object MapHelper {
     }
     """.trimIndent()
 
-        map.setStyle(
-            Style.Builder().fromJson(styleJson)
-        ) {
+        map.setStyle(Style.Builder().fromJson(styleJson)) { style ->
+            onStyleLoaded()
+        }
+
+    }
+
+    fun loadMapWithOSMTraffic(
+        context: Context,
+        isLightStyle: Boolean,
+        map: MapLibreMap,
+        onStyleLoaded: () -> Unit
+    ) {
+        val styleRes = if (!isLightStyle) R.raw.style_light else R.raw.style_dark
+        val json = context.resources.openRawResource(styleRes).bufferedReader().use { it.readText() }
+
+        map.setStyle(Style.Builder().fromJson(json)) { style ->
+            // ✅ Thêm traffic layer sau khi style load xong
+            val trafficUrl = "https://api.tomtom.com/traffic/map/4/tile/flow/relative0/{z}/{x}/{y}.png?key=3dOJmbYwmP6QAv4iFxiOn2DjugD9gOHf"
+            val tileSet = TileSet("tileset", trafficUrl)
+            val trafficSource = RasterSource("traffic-source", tileSet, 256)
+            val trafficLayer = RasterLayer("traffic-layer", "traffic-source")
+
+            // ✅ Chồng lên OSM
+            style.addSource(trafficSource)
+            style.addLayerAbove(trafficLayer, "osm-layer")// hoặc "osm-dark-layer" tùy ID trong style file
+
             onStyleLoaded()
         }
     }
+
 
 
 
@@ -113,7 +147,7 @@ object MapHelper {
 
         map.animateCamera(
             org.maplibre.android.camera.CameraUpdateFactory.newLatLngZoom(
-                org.maplibre.android.geometry.LatLng(lat, lng),
+                 LatLng(lat, lng),
                 15.0
             ), 1000
         )
@@ -122,7 +156,7 @@ object MapHelper {
     fun moveLocation(map: MapLibreMap, lat: Double, lng: Double){
         map.animateCamera(
             org.maplibre.android.camera.CameraUpdateFactory.newLatLngZoom(
-                org.maplibre.android.geometry.LatLng(lat, lng),
+                LatLng(lat, lng),
                 15.0
             ), 1000
         )
@@ -339,6 +373,7 @@ object MapHelper {
             "atm" to ("amenity" to "atm"),
             "stadium" to ("leisure" to "stadium"),
             "school" to ("amenity" to "school"),
+            "university" to ("amenity" to "university"),
             "airport" to ("aeroway" to "aerodrome"),
             "train station" to ("railway" to "station"),
             "bookstore" to ("shop" to "books"),
@@ -383,6 +418,7 @@ object MapHelper {
                 callback(emptyList())
             }
 
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call, response: Response) {
                 val bodyStr = response.body?.string()
                 if (bodyStr == null) {

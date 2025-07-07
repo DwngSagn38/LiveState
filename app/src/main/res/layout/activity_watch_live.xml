@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4FAFF"
+    tools:context=".ui.camera_live.WatchLiveActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="14dp"
+        android:padding="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/watch_live"
+        app:layout_constraintTop_toTopOf="@+id/imgBack"
+        app:layout_constraintBottom_toBottomOf="@+id/imgBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18sp"
+        android:textColor="@color/cl_text_464646"
+        android:fontFamily="@font/opensans_700"/>
+
+    <LinearLayout
+        android:id="@+id/llyoutubePlayerView"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@drawable/bg_item_place"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/imgBack">
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtubePlayerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_item_place"
+            android:clipToOutline="true"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/llyoutubePlayerView"
+        android:layout_marginTop="12dp"
+        android:textSize="16sp"
+        android:text="@string/hot_search"
+        android:textColor="@color/color_2C2C2C"
+        android:fontFamily="@font/opensans_700"
+        android:layout_marginHorizontal="16dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:singleLine="true"/>
+
+    <TextView
+        android:id="@+id/tvView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/llyoutubePlayerView"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountry"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"
+        android:text="@string/hot_search"
+        android:textColor="@color/text_item"
+        android:fontFamily="@font/opensans_400"
+        android:drawableStart="@drawable/icon_eye"
+        android:drawablePadding="6dp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/tvView"
+        app:layout_constraintEnd_toEndOf="@id/llyoutubePlayerView"
+        app:layout_constraintTop_toTopOf="@+id/tvView"
+        app:layout_constraintBottom_toBottomOf="@+id/tvView">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icLocation"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location_2"
+            app:layout_constraintEnd_toStartOf="@+id/tvLocation"/>
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/opensans_400"
+            android:text="@string/location"
+            android:textAlignment="textEnd"
+            android:textColor="@color/text_item"
+            android:textSize="14sp"/>
+    </LinearLayout>
+    
+
+    <TextView
+        android:id="@+id/tvWatchOther"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tvView"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/watch_other"
+        android:textSize="18sp"
+        android:textColor="#595959"
+        android:fontFamily="@font/opensans_700"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvCameraLive"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvWatchOther"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

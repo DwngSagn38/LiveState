@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "184100631853",
+    "project_id": "speedtest-84c8a",
+    "storage_bucket": "speedtest-84c8a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184100631853:android:0e9e30823c520b65d2cfa4",
+        "android_client_info": {
+          "package_name": "com.example.livestate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA_4GKyZmpVJLkdsctxlxaQNWCRWCmGho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184100631853:android:c90af6f65a6a9f47d2cfa4",
+        "android_client_info": {
+          "package_name": "com.marwatsoft.speedtestmaster"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA_4GKyZmpVJLkdsctxlxaQNWCRWCmGho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

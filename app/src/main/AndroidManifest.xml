@@ -21,6 +21,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.famous_place.FamousDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.famous_place.FamousPlaceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.camera_live.WatchLiveActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.traffic_alert.TrafficAlertActivity"
             android:exported="false" />
         <activity

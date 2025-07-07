@@ -3,6 +3,10 @@ package com.example.livestate.ui.nearby_places
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -60,7 +64,23 @@ class NearbyPlacesActivity : BaseActivity<ActivityNearbyPlacesBinding>() {
                 }
             }
             setData(filtered)
+
+            binding.tvNotFound.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
+            binding.rcvPlace.visibility = if (filtered.isEmpty()) View.GONE else View.VISIBLE
         }
+
+        binding.edtSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                v.clearFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
+
+
 
     }
 

@@ -41,6 +41,7 @@
 
     <string name="earth_3d">Earth 3D</string>
     <string name="camera_live">Camera Live</string>
+    <string name="watch_live">Watch Live</string>
     <string name="famous_place">Famous Place</string>
     <string name="nearby_places">Nearby Places</string>
     <string name="route_map">Route Map</string>
@@ -97,6 +98,7 @@
     <string name="durections">Durections</string>
     <string name="call">Call</string>
     <string name="not_found">Not found</string>
+    <string name="your_favorite_is_empty">Your favorite is empty</string>
     <string name="unknown">Unknown</string>
     <string name="unknown_open">Opening hours not available</string>
     <string name="dont_have_number_phone">This address don`t have number phone</string>
@@ -105,5 +107,9 @@
     <string name="destination_not_found">Destination not found.</string>
     <string name="fast">Fast</string>
     <string name="slow">Slow</string>
+    <string name="near_you">Near you</string>
+    <string name="hot_search">Hot search</string>
+    <string name="watch_other">Watch other</string>
+    <string name="watch">Watch</string>
 
 </resources>

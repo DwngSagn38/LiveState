@@ -1,0 +1,20 @@
+{
+  "version": 8,
+  "name": "Light Style",
+  "sources": {
+    "osm": {
+      "type": "raster",
+      "tiles": ["https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"],
+      "tileSize": 256
+    }
+  },
+  "layers": [
+    {
+      "id": "osm-layer",
+      "type": "raster",
+      "source": "osm",
+      "minzoom": 0,
+      "maxzoom": 19
+    }
+  ]
+}

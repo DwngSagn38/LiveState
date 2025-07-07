@@ -1,0 +1,38 @@
+{
+  "version": 8,
+  "name": "Dark with Highlight Roads",
+  "sources": {
+    "osm": {
+      "type": "raster",
+      "tiles": ["https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"],
+      "tileSize": 256
+    },
+    "highlight-roads": {
+      "type": "geojson",
+      "data": "https://example.com/highlighted_roads.geojson"
+    }
+  },
+  "layers": [
+    {
+      "id": "osm-layer",
+      "type": "raster",
+      "source": "osm"
+    },
+    {
+      "id": "highlight-roads",
+      "type": "line",
+      "source": "highlight-roads",
+      "paint": {
+        "line-color": "#FFD700",
+        "line-width": 3
+      }
+    },
+    {
+      "id": "dark-overlay",
+      "type": "background",
+      "paint": {
+        "background-color": "rgba(0,0,0,0.5)"
+      }
+    }
+  ]
+}

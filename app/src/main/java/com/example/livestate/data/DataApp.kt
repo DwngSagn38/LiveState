@@ -1,10 +1,26 @@
 package com.example.livestate.data
 
 import android.content.Context
+import android.util.Log
 import com.example.livestate.R
+import com.example.livestate.model.CameraLiveModel
+import com.example.livestate.model.FamousPlaceModel
 import com.example.livestate.model.PlacesModel
+import com.example.livestate.sharePreferent.PreferenceManager
 
 object DataApp {
+    val listCameraLive = mutableListOf<CameraLiveModel>()
+    var listFamousPlace = mutableListOf<FamousPlaceModel>()
+
+    fun setListCameraLive(context: Context, list: List<CameraLiveModel>) {
+        listCameraLive.clear()
+        listCameraLive.addAll(list)
+        Log.d("DataApp", "setListCameraLive: $listCameraLive")
+    }
+    fun getListCameraLive(context: Context): List<CameraLiveModel> {
+        return listCameraLive
+    }
+
     fun getListPlaces(context: Context): List<PlacesModel> {
         return listOf(
             PlacesModel(0,"Hospital", R.drawable.icon_hospital,R.drawable.icon_hospital2),
@@ -34,7 +50,38 @@ object DataApp {
             PlacesModel(24,"Zoo", R.drawable.icon_zoo, R.drawable.icon_zoo2),
             PlacesModel(25,"Bus Station", R.drawable.icon_bus_station, R.drawable.icon_bus_station),
             PlacesModel(26,"Restaurant", R.drawable.icon_restaurant, R.drawable.icon_restaurant),
+            PlacesModel(27,"University", R.drawable.icon_school, R.drawable.icon_school),
 
         )
+    }
+
+    fun getListFamousPlaceDefault(context: Context): List<FamousPlaceModel> {
+        return listOf(
+            FamousPlaceModel(0,"Vatican", R.drawable.img_vatican,false),
+            FamousPlaceModel(1,"New York", R.drawable.img_new_york,false),
+            FamousPlaceModel(2,"Tokyo", R.drawable.img_tokyo,false),
+            FamousPlaceModel(3,"Paris", R.drawable.img_paris,false),
+            FamousPlaceModel(4,"Hong Kong", R.drawable.img_hongkong,false),
+            FamousPlaceModel(5,"Italy", R.drawable.img_italy,false),
+            FamousPlaceModel(6,"Egyptian pyramids", R.drawable.img_egyptian_pyramids,false),
+            FamousPlaceModel(7,"Ha Long Bay", R.drawable.img_halong,false),
+            FamousPlaceModel(8,"Brazil", R.drawable.img_brazil,false),
+            FamousPlaceModel(9,"China", R.drawable.img_china,false),
+            FamousPlaceModel(10,"India", R.drawable.img_an_do,false),
+            FamousPlaceModel(11,"Petra", R.drawable.img_petra,false),
+            FamousPlaceModel(12,"Chichen Itza (Mexico)", R.drawable.img_chichen_itza_mexico,false),
+            FamousPlaceModel(13,"Machu Picchu (Peru)", R.drawable.img_machu_picchu_peru,false),
+            FamousPlaceModel(14,"Colosseum (Italy)", R.drawable.img_colosseum_italia,false),
+        )
+    }
+
+    fun getListWithFavorite(context: Context): List<FamousPlaceModel> {
+        val pref = PreferenceManager(context)
+        listFamousPlace = getListFamousPlaceDefault(context).toMutableList()
+        listFamousPlace.forEach {
+            it.favorite = pref.isFavorite( it.id.toString())
+        }
+        Log.d("DataApp", "getListWithFavorite: $listFamousPlace")
+        return listFamousPlace
     }
 }

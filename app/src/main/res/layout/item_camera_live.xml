@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="4dp"
+    android:gravity="center"
+    android:background="@android:color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:background="@drawable/bg_item_place">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgLive"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/bg_item_place"
+            android:clipToOutline="true"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_live"
+            app:layout_constraintTop_toTopOf="@+id/imgLive"
+            app:layout_constraintEnd_toEndOf="@+id/imgLive"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="6dp"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgHot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_hot"
+            app:layout_constraintEnd_toEndOf="@+id/imgLive"
+            app:layout_constraintBottom_toBottomOf="@+id/imgLive"
+            android:layout_marginBottom="6dp"
+            android:layout_marginEnd="6dp"/>
+
+        <TextView
+            android:id="@+id/tvCountry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/imgLive"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="16sp"
+            android:text="@string/hot_search"
+            android:textColor="@color/color_2C2C2C"
+            android:fontFamily="@font/opensans_700"
+            android:layout_marginHorizontal="12dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/tvView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/imgLive"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCountry"
+            android:textSize="14sp"
+            android:layout_marginTop="3dp"
+            android:text="@string/hot_search"
+            android:textColor="@color/text_item"
+            android:fontFamily="@font/opensans_400"
+            android:layout_marginHorizontal="12dp"
+            android:maxLines="1"
+            android:drawableStart="@drawable/icon_eye"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:singleLine="true"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

@@ -90,6 +90,8 @@
         }
     }
 
+let userLocationEntity = null; // Biến lưu entity vị trí người dùng
+
 function getMyLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -97,7 +99,13 @@ function getMyLocation() {
                 const lon = position.coords.longitude;
                 const lat = position.coords.latitude;
 
-                viewer.entities.add({
+                // Nếu đã có entity vị trí, thì xóa trước
+                if (userLocationEntity) {
+                    viewer.entities.remove(userLocationEntity);
+                }
+
+                // Thêm lại entity vị trí
+                userLocationEntity = viewer.entities.add({
                     position: Cesium.Cartesian3.fromDegrees(lon, lat),
                     billboard: {
                         image: 'http://127.0.0.1:8080/draw/ic_location.png',
@@ -110,7 +118,6 @@ function getMyLocation() {
                     destination: Cesium.Cartesian3.fromDegrees(lon, lat, 10000)
                 });
 
-                // Gọi về Android thông báo đã xong
                 if (window.AndroidInterface) {
                     window.AndroidInterface.onLocationFetched();
                 }
@@ -118,12 +125,13 @@ function getMyLocation() {
             function(error) {
                 console.error("Không lấy được vị trí: ", error);
                 if (window.AndroidInterface) {
-                    window.AndroidInterface.onLocationFetched(); // Ẩn loading nếu thất bại
+                    window.AndroidInterface.onLocationFetched();
                 }
             }
         );
     }
 }
+
 
     function toggleLight(isMoon){
         // Thêm layer city lights
@@ -195,9 +203,6 @@ function getMyLocation() {
         if (is2D) {
             layers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider());
             viewer.scene.morphTo2D(2.0);
-<!--            setTimeout(() => {-->
-<!--                getMyLocation();-->
-<!--            }, 3500);-->
         } else {
             // Morph sang 3D
             viewer.scene.morphTo3D(2.0);
@@ -220,6 +225,46 @@ function getMyLocation() {
             viewer.scene.morphComplete.addEventListener(onMorphComplete);
         }
     }
+
+<!--    function setImageryStyle(is2D) {-->
+<!--        const layers = viewer.imageryLayers;-->
+
+<!--        if (is2D) {-->
+<!--            const TILE_URL = "https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=6LfZ5hCjFSUTgYiouXpj";-->
+
+<!--            const maptilerProvider = new Cesium.UrlTemplateImageryProvider({-->
+<!--                url: TILE_URL,-->
+<!--                attribution: "© MapTiler © OpenStreetMap contributors",-->
+<!--                maximumLevel: 19-->
+<!--            });-->
+
+<!--            viewer.imageryLayers.addImageryProvider(maptilerProvider);-->
+
+<!--            // morph to 2D-->
+<!--            viewer.scene.morphTo2D(2.0);-->
+
+<!--        } else {-->
+<!--            // Morph sang 3D-->
+<!--            viewer.scene.morphTo3D(2.0);-->
+
+<!--            // Đợi morph hoàn tất rồi mới xử lý-->
+<!--            const onMorphComplete = function () {-->
+<!--                viewer.scene.morphComplete.removeEventListener(onMorphComplete);-->
+
+<!--                // Tải imagery-->
+<!--                Cesium.IonImageryProvider.fromAssetId(3).then((imageryProvider) => {-->
+<!--                    // Đảm bảo imagery đã load xong, giờ mới xóa layer cũ-->
+<!--                    layers.removeAll();-->
+<!--                    layers.addImageryProvider(imageryProvider);-->
+<!--                    viewer.camera.flyHome(2.0);-->
+<!--                }).catch((error) => {-->
+<!--                    console.error("Không thể tải imagery:", error);-->
+<!--                });-->
+<!--            };-->
+
+<!--            viewer.scene.morphComplete.addEventListener(onMorphComplete);-->
+<!--        }-->
+<!--    }-->
 
 
 

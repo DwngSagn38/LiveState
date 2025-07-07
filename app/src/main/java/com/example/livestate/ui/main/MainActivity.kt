@@ -12,9 +12,11 @@ import com.example.livestate.R
 import com.example.livestate.base.BaseActivity
 import com.example.livestate.databinding.ActivityMainBinding
 import com.example.livestate.ui.Speedometer.SpeedometerActivity
+import com.example.livestate.ui.camera_live.CameraLiveActivity
 import com.example.livestate.ui.cameracompass.CameraCompassActivity
 import com.example.livestate.ui.currency.CurrencyActivity
 import com.example.livestate.ui.earth3d.TheEarthActivity
+import com.example.livestate.ui.famous_place.FamousPlaceActivity
 import com.example.livestate.ui.my_location.MyLocationActivity
 import com.example.livestate.ui.nearby_places.NearbyPlacesActivity
 import com.example.livestate.ui.nearby_places.NearbyPlacesDetailActivity
@@ -59,6 +61,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.apply {
             imgSetting.tap { showActivity(SettingActivity::class.java) }
             llWeather.tap { showActivity(WeatherActivity::class.java) }
+            llFamousPlace.tap { showActivity(FamousPlaceActivity::class.java) }
+            llCameraLive.tap { showActivity(CameraLiveActivity::class.java) }
             llEarth3D.tap { checkLocationPermissionThenNavigate(TheEarthActivity::class.java) }
             llRouterMap.tap { checkLocationPermissionThenNavigate(RouteMapActivity::class.java) }
             llMyLocation.tap { checkLocationPermissionThenNavigate(MyLocationActivity::class.java) }
@@ -144,11 +148,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         ) {
             showActivity(WeatherActivity::class.java)
         } else {
-            Toast.makeText(
-                this,
-                getString(R.string.grant_location_permission_to_view_details),
-                Toast.LENGTH_SHORT
-            ).show()
             if (requestCode == 1001 && grantResults.isNotEmpty() &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED
             ) {

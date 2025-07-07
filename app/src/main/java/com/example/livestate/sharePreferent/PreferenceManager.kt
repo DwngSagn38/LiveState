@@ -2,6 +2,7 @@ package com.example.livestate.sharePreferent
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 
 
 class PreferenceManager(context: Context) {
@@ -10,24 +11,32 @@ class PreferenceManager(context: Context) {
 
     companion object {
         private const val PREF_NAME = "ghost_detector_prefs"
-        private const val KEY_CHECK_SOUND = "KEY_CHECK_SOUND"
-        private const val KEY_FILTER_INDEX = "KEY_FILTER_INDEX"
+        private const val KEY_FAVORITE_IDS = "KEY_FAVORITE_IDS"
 
     }
-    fun saveCheckSound(value: Boolean) {
-        sharedPref.edit().putBoolean(KEY_CHECK_SOUND, value).apply()
+
+    fun getFavoriteIds(): MutableSet<String> {
+        return sharedPref.getStringSet(KEY_FAVORITE_IDS, emptySet())?.toMutableSet() ?: mutableSetOf()
     }
 
-    fun saveFilter(int: Int) {
-        sharedPref.edit().putInt(KEY_FILTER_INDEX, int).apply()
+
+    fun saveFavoriteId(id: String) {
+        val ids = getFavoriteIds()
+        ids.add(id)
+        sharedPref.edit().putStringSet(KEY_FAVORITE_IDS, ids).apply()
+        Log.d("PreferenceManager", "saveFavoriteId: $ids")
     }
 
-    fun getCheckSound(): Boolean {
-        return sharedPref.getBoolean(KEY_CHECK_SOUND, true)
-    }
-    fun getFilter(): Int {
-        return sharedPref.getInt(KEY_FILTER_INDEX, 3)
+    fun removeFavoriteId(id: String) {
+        val ids = getFavoriteIds()
+        ids.remove(id)
+        sharedPref.edit().putStringSet(KEY_FAVORITE_IDS, ids).apply()
+        Log.d("PreferenceManager", "removeFavoriteId: $ids")
     }
 
+
+    fun isFavorite(id: String): Boolean {
+        return getFavoriteIds().contains(id)
+    }
 }
 

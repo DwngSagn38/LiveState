@@ -15,8 +15,15 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import android.media.MediaPlayer
+import android.util.Log
+import com.example.livestate.data.DataApp
+import com.example.livestate.model.CameraLiveModel
 import com.example.livestate.ui.language_start.LanguageStartActivity
 import com.example.livestate.ui.main.MainActivity
+import com.google.firebase.Firebase
+import com.google.firebase.remoteconfig.remoteConfig
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
@@ -27,7 +34,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun initView() {
-
+        fetchCameraListFromRemoteConfig()
         croutineScope.launch {
             delay(2000)
             startIntro()
@@ -55,4 +62,19 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun onPause() {
         super.onPause()
     }
+
+
+    private fun fetchCameraListFromRemoteConfig() {
+        val remoteConfig = Firebase.remoteConfig
+        remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val json = remoteConfig.getString("camera_live_list")
+                val type = object : TypeToken<List<CameraLiveModel>>() {}.type
+                val list = Gson().fromJson<List<CameraLiveModel>>(json, type)
+                Log.d("RemoteConfig", "Camera list fetched from Remote Config: $list")
+                DataApp.setListCameraLive(this,list)
+            }
+        }
+    }
+
 }

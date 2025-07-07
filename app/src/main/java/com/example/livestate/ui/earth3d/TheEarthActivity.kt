@@ -82,10 +82,11 @@ class TheEarthActivity : BaseActivity<ActivityTheEarthBinding>() {
 
 
         binding.imgMyLocation.tap {
-            isLoading = false
             loading(true)
+            if(isWebViewLoaded){
+                binding.webView.evaluateJavascript("getMyLocation()", null)
+            }
 
-            binding.webView.evaluateJavascript("getMyLocation()", null)
         }
 
         binding.imgLight.tap {
@@ -106,9 +107,11 @@ class TheEarthActivity : BaseActivity<ActivityTheEarthBinding>() {
         }
 
         binding.imgChange2D.tap {
-            isChangeMap = !isChangeMap
-            val jsCode = "setImageryStyle(${isChangeMap})"
-            binding.webView.evaluateJavascript(jsCode, null)
+            if(isWebViewLoaded){
+                isChangeMap = !isChangeMap
+                val jsCode = "setImageryStyle(${isChangeMap})"
+                binding.webView.evaluateJavascript(jsCode, null)
+            }
         }
     }
 

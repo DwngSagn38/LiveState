@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id 'kotlin-kapt'
+    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -49,6 +51,9 @@ dependencies {
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.room.common.jvm
     implementation libs.play.services.maps
+    implementation libs.androidx.media3.ui
+    implementation libs.firebase.config
+    implementation libs.firebase.crashlytics
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
@@ -78,6 +83,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'com.google.android.gms:play-services-location:21.1.0'
 
+    implementation("androidx.media3:media3-exoplayer:1.2.0")
+    implementation("androidx.media3:media3-exoplayer-rtsp:1.2.0")
+    implementation("androidx.media3:media3-ui:1.2.0")
 
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.2'
 
 }
