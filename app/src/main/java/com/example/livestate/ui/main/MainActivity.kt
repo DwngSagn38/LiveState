@@ -2,7 +2,6 @@ package com.example.livestate.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,14 +18,12 @@ import com.example.livestate.ui.earth3d.TheEarthActivity
 import com.example.livestate.ui.famous_place.FamousPlaceActivity
 import com.example.livestate.ui.my_location.MyLocationActivity
 import com.example.livestate.ui.nearby_places.NearbyPlacesActivity
-import com.example.livestate.ui.nearby_places.NearbyPlacesDetailActivity
 import com.example.livestate.ui.route_map.RouteMapActivity
 import com.example.livestate.ui.setting.SettingActivity
 import com.example.livestate.ui.traffic_alert.TrafficAlertActivity
 import com.example.livestate.widget.tap
 import com.example.livestate.ui.weather_activity.WeatherActivity
 import com.example.livestate.ui.world_clock.WorldClockActivity
-import com.example.livestate.widget.tap
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -104,6 +101,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 requestPermissionLauncher.launch(
                     arrayOf(
                         Manifest.permission.CAMERA,
+                        Manifest.permission.ACCESS_FINE_LOCATION
                     )
                 )
             }

@@ -1,10 +1,13 @@
 package com.example.livestate.ui.Speedometer
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
+import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import com.example.livestate.base.BaseActivity
 import com.example.livestate.databinding.ActivitySpeedometerBinding
@@ -14,17 +17,13 @@ class SpeedometerActivity : BaseActivity<ActivitySpeedometerBinding>() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private var isTracking = false
+    private var totalDistance = 0f
+    private var maxSpeed = 0f
+    private var speedSum = 0f
+    private var speedCount = 0
 
-    // Xin quyền runtime
-    private val locationPermissionRequest = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            startLocationUpdates()
-        } else {
-            Toast.makeText(this, "Vui lòng cấp quyền vị trí để sử dụng tính năng đo tốc độ.", Toast.LENGTH_SHORT).show()
-        }
-    }
+    private var lastLocation: Location? = null
 
     override fun setViewBinding(): ActivitySpeedometerBinding {
         return ActivitySpeedometerBinding.inflate(layoutInflater)
@@ -32,30 +31,46 @@ class SpeedometerActivity : BaseActivity<ActivitySpeedometerBinding>() {
 
     override fun initView() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        requestLocationUpdates()
+        updateNeedleRotation(0f)
+    }
 
-        // Kiểm tra quyền
+    override fun viewListener() {
+        binding.ivBack.setOnClickListener {
+           finish()
+        }
+        binding.btnStart.setOnClickListener {
+            isTracking = true
+            resetStats()
+            requestLocationUpdates()
+        }
+
+        binding.btnStop.setOnClickListener {
+            isTracking = false
+            fusedLocationClient.removeLocationUpdates(locationCallback)
+        }
+    }
+
+    override fun dataObservable() {
+        // Không có data observe trong scope này, có thể thêm sau
+    }
+
+    private fun requestLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            locationPermissionRequest.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        } else {
-            startLocationUpdates()
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1001
+            )
+            return
         }
-    }
 
-    override fun viewListener() {
-        // Thêm listener nếu có nút điều khiển
-    }
-
-    override fun dataObservable() {
-        // Dùng để observe LiveData nếu cần
-    }
-
-    private fun startLocationUpdates() {
         val locationRequest = LocationRequest.create().apply {
-            interval = 2000
+            interval = 2000 // 2 giây
             fastestInterval = 1000
             priority = Priority.PRIORITY_HIGH_ACCURACY
         }
@@ -64,31 +79,102 @@ class SpeedometerActivity : BaseActivity<ActivitySpeedometerBinding>() {
             override fun onLocationResult(result: LocationResult) {
                 super.onLocationResult(result)
                 for (location in result.locations) {
-                    val speedMps = location.speed     // đơn vị: m/s
-                    val speedKmh = speedMps * 3.6     // đổi sang km/h
-
-                    // Cập nhật giao diện đồng hồ tốc độ
-                    binding.speedView.speedTo(speedKmh.toFloat())
+                    updateSpeed(location)
                 }
             }
         }
 
-        // Chạy cập nhật vị trí
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            mainLooper
+        )
+    }
+
+    private var lastAngle = -90f
+
+    private fun updateSpeed(location: Location) {
+        if (!isTracking) return
+
+        val speedInKmh = (location.speed * 3.6f).coerceIn(0f, 240f)
+        binding.tvCurrentSpeed.text = String.format("%.1f", speedInKmh)
+
+        // Update kim
+        updateNeedleRotation(speedInKmh)
+
+        // Max speed
+        if (speedInKmh > maxSpeed) maxSpeed = speedInKmh
+
+        // AVG speed
+        speedSum += speedInKmh
+        speedCount++
+
+        // Distance
+        lastLocation?.let { last ->
+            val distance = last.distanceTo(location)
+            totalDistance += distance
+        }
+        lastLocation = location
+
+        // Cập nhật giao diện
+        binding.tvMaxSpeed.text = "%.1f".format(maxSpeed)
+        binding.tvAvgSpeed.text = "%.1f".format(if (speedCount > 0) speedSum / speedCount else 0f)
+        binding.tvDistance.text = "%.2f".format(totalDistance / 1000f)
+        binding.tvOdometer.text = "%.2f".format(totalDistance / 1000f)
+    }
+
+
+
+
+    private fun updateNeedleRotation(speedInKmh: Float) {
+        val minAngle = -110f
+        val maxAngle = 110f
+
+        // Giới hạn test từ 1 đến 5 km/h
+        val minTestSpeed = 0f
+        val maxTestSpeed = 24f
+
+        // Giới hạn speed để test dễ hơn
+        val testSpeed = speedInKmh.coerceIn(minTestSpeed, maxTestSpeed)
+
+        // Chuyển tốc độ test thành góc quay
+        val angle = minAngle + ((testSpeed - minTestSpeed) / (maxTestSpeed - minTestSpeed)) * (maxAngle - minAngle)
+
+        ObjectAnimator.ofFloat(binding.needleContainer, View.ROTATION, lastAngle, angle).apply {
+            duration = 300
+            interpolator = DecelerateInterpolator()
+            start()
+        }
+
+        lastAngle = angle
+    }
+
+
+    private fun resetStats() {
+        totalDistance = 0f
+        maxSpeed = 0f
+        speedSum = 0f
+        speedCount = 0
+        lastLocation = null
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == 1001 && grantResults.isNotEmpty()
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED
         ) {
-            fusedLocationClient.requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                mainLooper
-            )
+            requestLocationUpdates()
+        } else {
+            Toast.makeText(this, "Bạn cần cấp quyền GPS để xem tốc độ!", Toast.LENGTH_LONG).show()
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         if (::fusedLocationClient.isInitialized && ::locationCallback.isInitialized) {
             fusedLocationClient.removeLocationUpdates(locationCallback)
         }

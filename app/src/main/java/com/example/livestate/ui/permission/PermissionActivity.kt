@@ -5,7 +5,6 @@ import com.example.livestate.databinding.ActivityPermissionBinding
 import com.example.livestate.sharePreferent.SharePrefUtils
 import com.example.livestate.ui.main.MainActivity
 import com.example.livestate.utils.helper.Default.CAMERA_PERMISSION
-import com.example.livestate.utils.helper.Default.STORAGE_PERMISSION
 import com.example.livestate.widget.gone
 import com.example.livestate.widget.tap
 import com.example.livestate.widget.visible
