@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="25dp"
-    android:background="@drawable/bg_connection"
+    android:background="@color/white"
     >
 
     <RelativeLayout
@@ -18,7 +18,7 @@
         android:paddingVertical="10dp">
 
         <TextView
-            android:textColor="@color/main"
+            android:textColor="#373A3A"
             android:textSize="16sp"
             android:fontFamily="@font/opensans_700"
             android:id="@+id/tv_language"

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_connection"
+    android:background="@color/white"
     android:paddingTop="25dp">
 
     <RelativeLayout
@@ -24,18 +24,18 @@
             android:id="@+id/iv_back"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/ic_back3"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:padding="5dp" />
+            />
 
         <TextView
             android:id="@+id/tv_language"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@color/main"
+            android:textColor="#373A3A"
             android:textSize="16sp"
             android:fontFamily="@font/opensans_700"
             android:textAlignment="center"

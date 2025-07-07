@@ -4,14 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_connection">
+    android:background="@drawable/bg_splash">
 
-    <ImageView
-        android:id="@+id/imageGhost"
-        android:layout_width="255dp"
-        android:layout_height="205dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_language"
+<!--    <ImageView-->
+<!--        android:id="@+id/imageGhost"-->
+<!--        android:layout_width="255dp"-->
+<!--        android:layout_height="205dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/ic_language"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/lottieLoading"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/main"
+        android:textAllCaps="true"
+        android:textSize="22sp"
+        android:fontFamily="@font/opensans_700"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toTopOf="@+id/lottieLoading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
