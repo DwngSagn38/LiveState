@@ -56,13 +56,14 @@ object SharePrefKotlin {
     }
 
 
-     fun saveCoordinatesToSharedPreferences(context: Context,lat: Double, lon: Double) {
+    fun saveCoordinatesToSharedPreferences(context: Context, lat: Double, lon: Double) {
         val sharedPref = context.getSharedPreferences("MySharedPref", MODE_PRIVATE)
         val editor = sharedPref.edit()
         editor.putString("latitude", lat.toString())
         editor.putString("longitude", lon.toString())
         editor.apply()
     }
+
     fun getSavedCoordinates(context: Context): LatLng {
         val sharedPrefs = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
         val lat = sharedPrefs.getString("latitude", null)
@@ -73,4 +74,5 @@ object SharePrefKotlin {
             LatLng(0.0, 0.0)
         }
     }
+
 }

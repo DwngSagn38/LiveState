@@ -105,5 +105,10 @@
     <string name="destination_not_found">Destination not found.</string>
     <string name="fast">Fast</string>
     <string name="slow">Slow</string>
-
+    <string name="address_not_found">Address not found</string>
+    <string name="error_fetching_address">Error fetching address</string>
+    <string name="odometer">Odometer</string>
+    <string name="avg_speed">AVG Speed</string>
+    <string name="max_speed">Max Speed</string>
+    <string name="stop">Stop</string>
 </resources>

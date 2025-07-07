@@ -84,6 +84,9 @@ class WeatherActivity : BaseActivity<ActivityWeatherActivityBinding>() {
     }
 
     override fun viewListener() {
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
         binding.btnSearch.setOnClickListener {
             val city = binding.etCity.text.toString().trim()
             if (city.isNotEmpty()) {

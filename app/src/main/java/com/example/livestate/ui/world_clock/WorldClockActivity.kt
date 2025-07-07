@@ -16,6 +16,7 @@ import com.example.livestate.R
 import com.example.livestate.base.BaseActivity
 import com.example.livestate.databinding.ActivityWorldClockBinding
 import com.example.livestate.model.CountryTime
+import com.example.livestate.widget.tap
 import kotlinx.coroutines.launch
 
 class WorldClockActivity : BaseActivity<ActivityWorldClockBinding>() {
@@ -59,6 +60,9 @@ class WorldClockActivity : BaseActivity<ActivityWorldClockBinding>() {
 
 
     override fun viewListener() {
+        binding.ivBack.tap {
+            finish()
+        }
     }
 
     override fun dataObservable() {

@@ -3,7 +3,6 @@ package  com.example.livestate.ui.intro
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.example.livestate.R
 import com.example.livestate.base.BaseActivity

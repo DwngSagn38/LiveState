@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.camera.view.PreviewView
+        android:visibility="visible"
         android:id="@+id/previewView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -16,7 +17,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
+    <org.maplibre.android.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -40,6 +45,7 @@
             app:srcCompat="@drawable/icon_back" />
 
         <TextView
+            android:id="@+id/tv_name_activity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,24 +55,43 @@
             android:textSize="20sp" />
     </LinearLayout>
 
+    <ImageView
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="19dp"
+        android:src="@drawable/light"
+        android:id="@+id/iv_1"
+        android:layout_marginTop="16dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        />
+
+    <ImageView
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/iv_2"
+        android:layout_width="48dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_camera"
+        android:layout_height="48dp"
+        />
 
 
     <FrameLayout
         android:id="@+id/layout2"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_2"
         tools:ignore="MissingConstraints">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/img_clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp"
             app:cardCornerRadius="150dp">
 
         </androidx.cardview.widget.CardView>
@@ -80,23 +105,45 @@
             android:background="@drawable/dot_red"
             />
 
+
+
     </FrameLayout>
 
     <TextView
         android:id="@+id/coordinates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_700"
-        android:textColor="#000000"
-        android:padding="10dp"
         android:background="@drawable/bg_ffffffe5_coner"
+        android:fontFamily="@font/opensans_700"
+        android:padding="10dp"
+        android:textColor="#000000"
         android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvLocation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout2"
+        app:layout_constraintVertical_bias="0.415"
         tools:text="aaaaa" />
 
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="0dp"
+        android:layout_marginBottom="30dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_400"
+        android:textColor="#000000"
+        android:padding="8dp"
+        android:background="@drawable/bg_e7f6ff_coner"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+        android:layout_marginHorizontal="16dp"
+        tools:text="31 Evans Terminal Rd #1, Hillside, NJ 07205, United States" />
+
     <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
