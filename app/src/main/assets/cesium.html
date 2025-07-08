@@ -50,10 +50,6 @@
         alert("Thiết bị không hỗ trợ WebGL, không thể tải bản đồ.");
     }
 
-    const osmProvider = new Cesium.OpenStreetMapImageryProvider({
-        url : 'https://a.tile.openstreetmap.org/'
-    });
-
     const viewer = new Cesium.Viewer('cesiumContainer', {
         creditContainer: document.createElement("div"),
         baseLayerPicker: false,
@@ -68,17 +64,29 @@
         navigationHelpButton: false,
     });
 
+    // Các thiết lập cải thiện tương thích thiết bị yếu
     viewer.scene.sun.show = true;
     viewer.scene.moon.show = true;
-    viewer.scene.skyBox.show = true;
-    viewer.scene.skyAtmosphere.show = true;
+    viewer.shadows = false;
+    viewer.scene.globe.maximumScreenSpaceError = 1;
+    viewer.scene.highDynamicRange = false;
+    viewer.scene.postProcessStages.fxaa.enabled = false;
+
+<!--    const osmProvider = new Cesium.OpenStreetMapImageryProvider({-->
+<!--        url : 'https://a.tile.openstreetmap.org/'-->
+<!--    });-->
 <!--    viewer.imageryLayers.addImageryProvider(osmProvider);-->
 
     Cesium.IonImageryProvider.fromAssetId(3).then((imageryProvider) => {
         viewer.imageryLayers.addImageryProvider(imageryProvider);
-        viewer.camera.flyHome(2.0);
-    }).catch((error) => {
-        console.error("Không thể tải imagery:", error);
+
+        setTimeout(() => {
+            viewer.camera.flyTo({
+                destination: Cesium.Cartesian3.fromDegrees(lonCR, latCR, 3500000),
+                duration: 2.5
+            });
+        }, 1000); // delay 1s
+
     });
 
     function searchLocationFromAndroid(keyword) {
@@ -91,6 +99,8 @@
     }
 
 let userLocationEntity = null; // Biến lưu entity vị trí người dùng
+let lonCR = null; // Biến lưu entity vị trí người dùng
+let latCR = null; // Biến lưu entity vị trí người dùng
 
 function getMyLocation() {
     if (navigator.geolocation) {
@@ -98,7 +108,8 @@ function getMyLocation() {
             function(position) {
                 const lon = position.coords.longitude;
                 const lat = position.coords.latitude;
-
+                lonCR = lon
+                latCR = lat
                 // Nếu đã có entity vị trí, thì xóa trước
                 if (userLocationEntity) {
                     viewer.entities.remove(userLocationEntity);
@@ -115,7 +126,7 @@ function getMyLocation() {
                 });
 
                 viewer.camera.flyTo({
-                    destination: Cesium.Cartesian3.fromDegrees(lon, lat, 10000)
+                    destination: Cesium.Cartesian3.fromDegrees(lon, lat, 2000)
                 });
 
                 if (window.AndroidInterface) {

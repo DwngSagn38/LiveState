@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.GeolocationPermissions
@@ -159,6 +160,9 @@ class TheEarthActivity : BaseActivity<ActivityTheEarthBinding>() {
                 isWebViewLoaded = true
             }
         }
+
+        binding.webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
 
     }
 

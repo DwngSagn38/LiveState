@@ -49,11 +49,11 @@ class LanguageAdapter(
                 "ja" -> binding.icLang.setImageResource(R.drawable.flag_japan)
             }
             if (data.active) {
-//                binding.txtName.setTextColor(context.getColor(R.color.white))
+                binding.txtName.setTextColor(context.getColor(R.color.white))
                 binding.layoutItem.setBackgroundResource(R.drawable.bg_item_language_select)
             }
             else {
-//                binding.txtName.setTextColor(context.getColor(R.color.color_1E232E))
+                binding.txtName.setTextColor(context.getColor(R.color.cl_text_464646))
                 binding.layoutItem.setBackgroundResource(R.drawable.bg_item_language_unselect)
             }
         }
