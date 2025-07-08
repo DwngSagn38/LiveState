@@ -48,11 +48,11 @@ class LanguageStartAdapter(
 
             // đặt backGroud cho trạng thái active
             if (data.active) {
-//                binding.txtName.setTextColor(context.getColor(R.color.white))
+                binding.txtName.setTextColor(context.getColor(R.color.white))
                binding.layoutItem.setBackgroundResource(R.drawable.bg_item_language_select)
             }
             else {
-//                binding.txtName.setTextColor(context.getColor(R.color.color_1E232E))
+                binding.txtName.setTextColor(context.getColor(R.color.black))
                 binding.layoutItem.setBackgroundResource(R.drawable.bg_item_language_unselect)
             }
 

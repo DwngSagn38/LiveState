@@ -19,23 +19,23 @@
 
     <TextView
         app:layout_constraintTop_toBottomOf="@+id/ivIntro"
-        android:fontFamily="@font/opensans_600"
+        android:fontFamily="@font/opensans_700"
         android:layout_marginTop="40dp"
         android:id="@+id/tvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textSize="20sp"
-        android:textColor="@color/main"
+        android:textSize="22sp"
+        android:textColor="#292B2B"
         />
     <TextView
         app:layout_constraintTop_toBottomOf="@+id/tvContent"
-        android:fontFamily="@font/opensans_400"
+        android:fontFamily="@font/opensans_600"
         android:layout_marginTop="5dp"
         android:id="@+id/tvTile"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
-        android:textColor="@color/main"
+        android:textColor="#292B2B"
         android:textSize="16sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

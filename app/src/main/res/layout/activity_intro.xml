@@ -6,7 +6,7 @@
     android:id="@+id/bg_intro"
     android:orientation="vertical"
     android:paddingTop="25dp"
-    android:background="@drawable/bg_connection"
+    android:background="@color/white"
     >
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager2"
@@ -57,6 +57,8 @@
             android:text="@string/next"
             android:textAllCaps="false"
             android:textColor="@color/primary"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_item_language_select"
             android:textSize="18sp" />
 
     </RelativeLayout>

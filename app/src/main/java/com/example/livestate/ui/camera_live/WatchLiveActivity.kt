@@ -39,6 +39,7 @@ class WatchLiveActivity : BaseActivity<ActivityWatchLiveBinding>() {
         adapter = CameraLiveAdapter {
             currentCameraLive = it
             setData()
+            getLocation(it.title)
             loadListCameraLive()
         }
 
@@ -97,6 +98,20 @@ class WatchLiveActivity : BaseActivity<ActivityWatchLiveBinding>() {
         list = DataApp.getListCameraLive(this)
             .filter { it.title != currentCameraLive.title }
         adapter.addList(list.toMutableList())
+    }
+
+    private fun getLocation(address: String){
+        binding.tvLocation.text = getString(R.string.loading)
+        MapHelper.forwardGeocode(address) { geoResult ->
+            val resolvedAddress = if (geoResult != null) {
+                val lat = geoResult.coordinates()[1]
+                val lon = geoResult.coordinates()[0]
+                "$lat, $lon"
+            } else {
+                "Unknown"
+            }
+            binding.tvLocation.text = resolvedAddress
+        }
     }
 
 }
