@@ -56,6 +56,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class CameraCompassActivity : BaseActivity2<ActivityCameraCompassBinding>(), SensorEventListener {
+    private lateinit var locationCallback: LocationCallback
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var sensorManager: SensorManager
@@ -212,7 +213,8 @@ class CameraCompassActivity : BaseActivity2<ActivityCameraCompassBinding>(), Sen
             fastestInterval = 1000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-        val locationCallback = object : LocationCallback() {
+
+        locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 super.onLocationResult(locationResult)
                 val location = locationResult.lastLocation
@@ -227,12 +229,12 @@ class CameraCompassActivity : BaseActivity2<ActivityCameraCompassBinding>(), Sen
                     targetLocation = currentLatLng!!
                     fetchAddressFromLatLng(currentLatLng!!)
                     callback(currentLatLng!!)
-
                 } ?: run {
                     Toast.makeText(this@CameraCompassActivity, R.string.location_not_available, Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 
@@ -324,6 +326,9 @@ class CameraCompassActivity : BaseActivity2<ActivityCameraCompassBinding>(), Sen
 
     override fun onPause() {
         super.onPause()
+        if (::fusedLocationClient.isInitialized && ::locationCallback.isInitialized) {
+            fusedLocationClient.removeLocationUpdates(locationCallback)
+        }
         sensorManager.unregisterListener(this)
     }
     override fun onSensorChanged(event: SensorEvent?) {
