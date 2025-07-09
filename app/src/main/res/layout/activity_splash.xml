@@ -18,6 +18,7 @@
 <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <TextView
+        android:id="@+id/tv_splash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
@@ -26,24 +27,46 @@
         android:textSize="22sp"
         android:fontFamily="@font/opensans_700"
         android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/lottieLoading"
+        app:layout_constraintBottom_toTopOf="@+id/tvAds"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieLoading"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="10dp"
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:id="@+id/lottieLoading"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/tvAds"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:lottie_autoPlay="true"-->
+<!--        app:lottie_loop="true"-->
+<!--        tools:ignore="MissingConstraints,UnusedAttribute" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_marginBottom="12dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/tvAds"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        tools:ignore="MissingConstraints,UnusedAttribute" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ProgressBar
+            android:id="@+id/splash_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_6sdp"
+            android:layout_marginHorizontal="@dimen/_70sdp"
+            android:indeterminate="true"
+            android:padding="@dimen/_1sdp"
+            android:indeterminateDrawable="@drawable/ic_progressbar"/>
+    </LinearLayout>
 
 
     <TextView
@@ -55,8 +78,8 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_11ssp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/lottieLoading"
-        app:layout_constraintStart_toStartOf="@id/lottieLoading" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
