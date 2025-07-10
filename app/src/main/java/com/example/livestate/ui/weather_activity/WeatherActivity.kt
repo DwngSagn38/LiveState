@@ -4,6 +4,7 @@ import ForecastResponse
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -22,9 +23,11 @@ import com.example.myapplication.model.GeoLocation
 import com.example.myapplication.model.WeatherResponse
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -79,7 +82,7 @@ class WeatherActivity : BaseActivity<ActivityWeatherActivityBinding>() {
 
     override fun initView() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        showLoading() // 👉 Hiển thị loading khi vừa vào màn hình
+        showLoading()
         getCityFromCurrentLocation()
     }
 
@@ -281,11 +284,16 @@ class WeatherActivity : BaseActivity<ActivityWeatherActivityBinding>() {
     private fun fetchWeatherApiDetails(city: String) {
         weatherAPIService.getForecast(weatherApiKey, city)
             .enqueue(object : Callback<ForecastResponse> {
+
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onResponse(
                     call: Call<ForecastResponse>,
                     response: Response<ForecastResponse>
                 ) {
+                    Log.d("ForecastDebug", Gson().toJson(response.body()))
+                    val file = File(filesDir, "debug_forecast.txt")
+                    file.writeText(Gson().toJson(response.body()))
+
                     val forecast = response.body() ?: return showError("❌ Không lấy được dữ liệu")
                     val today = forecast.forecast.forecastday.firstOrNull()?.let { day ->
                         WeatherDay(
