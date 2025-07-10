@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_earth_2d"
         android:layout_marginEnd="14dp"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="@+id/imgBack"
         app:layout_constraintBottom_toBottomOf="@+id/imgBack"
         app:layout_constraintEnd_toEndOf="parent"/>

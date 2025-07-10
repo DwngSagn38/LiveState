@@ -47,7 +47,7 @@
     <LinearLayout
         android:id="@+id/inputContainer"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="240dp"
         android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -79,7 +79,7 @@
             <TextView
                 android:id="@+id/tvDuration"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="@string/duration"
                 android:textSize="14sp"
                 android:background="@drawable/bg_text_show"
@@ -90,6 +90,7 @@
                 android:textColor="@color/cl_text_020112"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvDistance"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDistance"
                 app:layout_constraintStart_toEndOf="@+id/tvDistance"/>
 
             <androidx.appcompat.widget.AppCompatImageView
