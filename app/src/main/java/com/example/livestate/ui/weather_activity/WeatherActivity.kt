@@ -4,7 +4,10 @@ import ForecastResponse
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -95,6 +98,17 @@ class WeatherActivity : BaseActivity<ActivityWeatherActivityBinding>() {
                 fetchCoordinates(city)
             } else {
                 Toast.makeText(this, "Vui lòng nhập tên thành phố", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.etCity.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                v.clearFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                true
+            } else {
+                false
             }
         }
     }

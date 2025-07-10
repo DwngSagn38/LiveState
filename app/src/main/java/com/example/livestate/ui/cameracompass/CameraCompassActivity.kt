@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -401,15 +402,15 @@ class CameraCompassActivity : BaseActivity2<ActivityCameraCompassBinding>(), Sen
             if (checkStatus == 1) {
                 checkStatus = 0
                 binding.mapView.gone()
+                binding.tvNameActivity.setTextColor(Color.BLACK)
                 binding.previewView.gone()
-                binding.tvNameActivity.setTextColor(R.color.black)
                 binding.iv1.setImageResource(R.drawable.light)
             } else {
                 checkStatus = 1
                 binding.mapView.visible()
                 binding.previewView.gone()
+                binding.tvNameActivity.setTextColor(Color.WHITE)
                 binding.iv1.setImageResource(R.drawable.ic_x)
-                binding.tvNameActivity.setTextColor(R.color.white)
                 binding.iv2.setImageResource(R.drawable.ic_camera)
 
             }
@@ -419,14 +420,14 @@ class CameraCompassActivity : BaseActivity2<ActivityCameraCompassBinding>(), Sen
                 checkStatus = 0
                 binding.mapView.gone()
                 binding.previewView.gone()
-                binding.tvNameActivity.setTextColor(R.color.black)
+                binding.tvNameActivity.setTextColor(Color.BLACK)
                 binding.iv2.setImageResource(R.drawable.ic_camera)
             } else {
                 checkStatus = 2
                 binding.mapView.gone()
                 binding.previewView.visible()
+                binding.tvNameActivity.setTextColor(Color.WHITE)
                 binding.iv2.setImageResource(R.drawable.ic_x)
-                binding.tvNameActivity.setTextColor(R.color.white)
                 binding.iv1.setImageResource(R.drawable.light)
             }
         }

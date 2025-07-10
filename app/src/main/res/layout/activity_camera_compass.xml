@@ -50,8 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/camera_compass"
-            android:textColor="#FFFFFF"
+            android:text="@string/compass"
+            android:textColor="@color/white"
+            android:fontFamily="@font/opensans_700"
             android:textSize="20sp" />
     </LinearLayout>
 

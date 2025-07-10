@@ -57,6 +57,11 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/opensans_600"
                 android:hint="@string/search_location"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:paddingEnd="16dp"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

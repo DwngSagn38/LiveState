@@ -2,7 +2,10 @@ package com.example.livestate.ui.world_clock
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -46,7 +49,7 @@ class WorldClockActivity : BaseActivity<ActivityWorldClockBinding>() {
             } catch (e: Exception) {
                 Log.e("API_ERROR", "Lỗi: ${e.message}")
                 loadingOverlay.visibility = View.GONE
-                Toast.makeText(this@WorldClockActivity, "Không tải được dữ liệu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@WorldClockActivity, getString(R.string.not_found), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -62,6 +65,17 @@ class WorldClockActivity : BaseActivity<ActivityWorldClockBinding>() {
     override fun viewListener() {
         binding.ivBack.tap {
             finish()
+        }
+
+        binding.etCity.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                v.clearFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                true
+            } else {
+                false
+            }
         }
     }
 
