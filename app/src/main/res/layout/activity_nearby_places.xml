@@ -16,7 +16,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="6dp"
         android:visibility="invisible"
-        android:background="@drawable/bg_text_show"
+        android:background="@drawable/bg_text_show1"
         android:backgroundTint="@color/white">
 
         <androidx.appcompat.widget.AppCompatImageView

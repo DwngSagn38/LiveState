@@ -265,7 +265,7 @@ class RouteMapActivity : BaseActivity2<ActivityRouteMapBinding>(), CoroutineScop
                     }
 
                     val durationText = SpannableStringBuilder().apply {
-                        append(getString(R.string.distance))
+                        append(getString(R.string.duration))
                         val start = length
                         append(": $durationMin min")
                         setSpan(StyleSpan(Typeface.BOLD), start, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imgBack"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="6dp"
-        android:background="@drawable/bg_text_show"
+        android:background="@drawable/bg_text_show1"
         android:backgroundTint="@color/white">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -60,7 +60,7 @@
             android:id="@+id/edtSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/enter_hotel_hospital"
+            android:hint="@string/enter_district_city_or_country"
             android:textColor="@color/text_item"
             android:textColorHint="#545F79"
             android:textSize="14sp"

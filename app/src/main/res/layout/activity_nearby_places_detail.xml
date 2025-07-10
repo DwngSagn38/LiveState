@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="18sp"
-        android:textColor="@color/main"
+        android:textColor="@color/black"
         android:fontFamily="@font/opensans_700"/>
 
     <org.maplibre.android.maps.MapView

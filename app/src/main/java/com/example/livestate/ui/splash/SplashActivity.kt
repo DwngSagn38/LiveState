@@ -69,10 +69,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val json = remoteConfig.getString("camera_live_list")
-                val type = object : TypeToken<List<CameraLiveModel>>() {}.type
-                val list = Gson().fromJson<List<CameraLiveModel>>(json, type)
-                Log.d("RemoteConfig", "Camera list fetched from Remote Config: $list")
-                DataApp.setListCameraLive(this,list)
+                try {
+                    val type = object : TypeToken<List<CameraLiveModel>>() {}.type
+                    val list = Gson().fromJson<List<CameraLiveModel>>(json, type)
+                    DataApp.setListCameraLive(this, list)
+                } catch (e: Exception) {
+                    Log.e("RemoteConfig", "Failed to parse camera_live_list", e)
+                }
             }
         }
     }
