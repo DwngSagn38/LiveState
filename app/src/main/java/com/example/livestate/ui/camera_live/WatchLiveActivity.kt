@@ -101,14 +101,13 @@ class WatchLiveActivity : BaseActivity<ActivityWatchLiveBinding>() {
     }
 
     private fun getLocation(address: String){
-        binding.tvLocation.text = getString(R.string.loading)
         MapHelper.forwardGeocode(address) { geoResult ->
             val resolvedAddress = if (geoResult != null) {
                 val lat = geoResult.coordinates()[1]
                 val lon = geoResult.coordinates()[0]
                 "$lat, $lon"
             } else {
-                "Unknown"
+                getString(R.string.address_location)
             }
             binding.tvLocation.text = resolvedAddress
         }

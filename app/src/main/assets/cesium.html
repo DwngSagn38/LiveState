@@ -214,6 +214,12 @@ function getMyLocation() {
         if (is2D) {
             layers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider());
             viewer.scene.morphTo2D(2.0);
+            setTimeout(() => {
+                        viewer.camera.flyTo({
+                            destination: Cesium.Cartesian3.fromDegrees(lonCR, latCR, 3500000),
+                            duration: 2.5
+                        });
+                    }, 1000); // delay 1s
         } else {
             // Morph sang 3D
             viewer.scene.morphTo3D(2.0);
@@ -228,6 +234,13 @@ function getMyLocation() {
                     layers.removeAll();
                     layers.addImageryProvider(imageryProvider);
                     viewer.camera.flyHome(2.0);
+
+                    setTimeout(() => {
+                        viewer.camera.flyTo({
+                            destination: Cesium.Cartesian3.fromDegrees(lonCR, latCR, 3500000),
+                            duration: 2.5
+                        });
+                    }, 1000); // delay 1s
                 }).catch((error) => {
                     console.error("Không thể tải imagery:", error);
                 });

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Trạng Thái Trực Tiếp</string>
+    <string name="app_name">Live State</string>
     <string name="this_is_item_sample">Đây là một ví dụ về mục!</string>
     <string name="please_send_us">Vui lòng gửi phản hồi cho chúng tôi!</string>
     <string name="write_some_feedback">Viết một vài phản hồi</string>
