@@ -74,6 +74,26 @@ class TrafficAlertActivity : BaseActivity2<ActivityTrafficAlertBinding>() {
                 mapLibreMap.animateCamera(CameraUpdateFactory.zoomTo(currentZoom - 1))
             }
         }
+
+        binding.imgSearch2.tap {
+            val tvSearch = binding.edtSearch.text
+            MapHelper.forwardGeocode(tvSearch.toString()) {
+                runOnUiThread {
+                    if (it != null) {
+                        val lat = it.coordinates()[1]
+                        val lon = it.coordinates()[0]
+                        MapHelper.moveLocation(mapLibreMap, lat, lon)
+                    } else {
+                        Toast.makeText(
+                            this@TrafficAlertActivity,
+                            getString(R.string.address_not_found),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
     }
 
     override fun dataObservable() {
