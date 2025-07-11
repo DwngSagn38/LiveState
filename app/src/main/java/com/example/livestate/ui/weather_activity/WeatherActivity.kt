@@ -176,7 +176,6 @@ class WeatherActivity : BaseActivity<ActivityWeatherActivityBinding>() {
                                 val cityName = displayName?.split(",")?.firstOrNull()?.trim()
 
                                 if (!cityName.isNullOrEmpty()) {
-                                    binding.etCity.setText(cityName)
                                     fetchCoordinates(cityName)
                                 } else {
                                     showError("❌ Không tìm được tên thành phố từ vị trí GPS. Hãy thử lại.")
