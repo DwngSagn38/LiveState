@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,155 +9,173 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.route_map.RouteMapActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_back3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="14dp"
-        android:padding="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/route_map"
-        app:layout_constraintTop_toTopOf="@+id/imgBack"
-        app:layout_constraintBottom_toBottomOf="@+id/imgBack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="18sp"
-        android:textColor="@color/cl_text_464646"
-        android:fontFamily="@font/opensans_700"/>
-
-    <org.maplibre.android.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgBack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="160dp"
-        />
 
 
-    <LinearLayout
-        android:id="@+id/inputContainer"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:orientation="vertical"
+        <org.maplibre.android.maps.MapView
+            android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_bottom"
-            android:padding="8dp">
+            android:layout_marginBottom="160dp"
+            android:layout_marginTop="70dp"/>
 
-            <TextView
-                android:id="@+id/tvDistance"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/distance"
-                android:textSize="14sp"
-                android:background="@drawable/bg_text_show"
-                android:padding="12dp"
-                android:layout_marginHorizontal="10dp"
-                android:textAlignment="center"
-                android:fontFamily="@font/opensans_400"
-                android:textColor="@color/cl_text_020112"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tvDuration"/>
 
-            <TextView
-                android:id="@+id/tvDuration"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="@string/duration"
-                android:textSize="14sp"
-                android:background="@drawable/bg_text_show"
-                android:padding="12dp"
-                android:textAlignment="center"
-                android:layout_marginHorizontal="10dp"
-                android:fontFamily="@font/opensans_400"
-                android:textColor="@color/cl_text_020112"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvDistance"
-                app:layout_constraintBottom_toBottomOf="@+id/tvDistance"
-                app:layout_constraintStart_toEndOf="@+id/tvDistance"/>
+        <LinearLayout
+            android:id="@+id/inputContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:gravity="bottom"
+            android:background="@android:color/transparent">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgDistance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_distance"
-                app:layout_constraintTop_toBottomOf="@+id/tvDistance"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:background="@drawable/bg_bottom"
+                android:padding="8dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/etStart"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Nhập địa điểm bắt đầu"
-                android:background="@drawable/bg_btn_edittext"
-                app:layout_constraintStart_toEndOf="@+id/imgDistance"
-                app:layout_constraintTop_toBottomOf="@+id/tvDistance"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="12dp"
-                android:paddingVertical="12dp"
-                android:paddingStart="14dp"
-                android:paddingEnd="24dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:layout_marginHorizontal="14dp"/>
+                <TextView
+                    android:id="@+id/tvDistance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/distance"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_text_show"
+                    android:padding="12dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:textAlignment="center"
+                    android:fontFamily="@font/opensans_400"
+                    android:textColor="@color/cl_text_020112"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvDuration"/>
 
-            <AutoCompleteTextView
-                android:id="@+id/etEnd"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Nhập địa điểm den"
-                android:background="@drawable/bg_btn_edittext"
-                app:layout_constraintStart_toEndOf="@+id/imgDistance"
-                app:layout_constraintTop_toBottomOf="@+id/etStart"
-                app:layout_constraintEnd_toStartOf="@id/btnFindRoute"
-                android:layout_marginTop="12dp"
-                android:paddingVertical="12dp"
-                android:paddingStart="14dp"
-                android:paddingEnd="44dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:layout_marginHorizontal="14dp"/>
+                <TextView
+                    android:id="@+id/tvDuration"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="@string/duration"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_text_show"
+                    android:padding="12dp"
+                    android:textAlignment="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:fontFamily="@font/opensans_400"
+                    android:textColor="@color/cl_text_020112"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvDistance"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDistance"
+                    app:layout_constraintStart_toEndOf="@+id/tvDistance"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btnMicro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_microphone"
-                app:layout_constraintTop_toTopOf="@+id/etEnd"
-                app:layout_constraintBottom_toBottomOf="@+id/etEnd"
-                app:layout_constraintEnd_toEndOf="@+id/etEnd"
-                android:padding="12dp"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_distance"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDistance"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_margin="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btnFindRoute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_search"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/etEnd"
-                app:layout_constraintBottom_toBottomOf="@+id/etEnd"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <AutoCompleteTextView
+                    android:id="@+id/etStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Nhập địa điểm bắt đầu"
+                    android:background="@drawable/bg_btn_edittext"
+                    app:layout_constraintStart_toEndOf="@+id/imgDistance"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDistance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="12dp"
+                    android:paddingVertical="12dp"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="24dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:layout_marginHorizontal="14dp"/>
+
+                <AutoCompleteTextView
+                    android:id="@+id/etEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Nhập địa điểm den"
+                    android:background="@drawable/bg_btn_edittext"
+                    app:layout_constraintStart_toEndOf="@+id/imgDistance"
+                    app:layout_constraintTop_toBottomOf="@+id/etStart"
+                    app:layout_constraintEnd_toStartOf="@id/btnFindRoute"
+                    android:layout_marginTop="12dp"
+                    android:paddingVertical="12dp"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="44dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:layout_marginHorizontal="14dp"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnMicro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_microphone"
+                    app:layout_constraintTop_toTopOf="@+id/etEnd"
+                    app:layout_constraintBottom_toBottomOf="@+id/etEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/etEnd"
+                    android:padding="12dp"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnFindRoute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_search"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/etEnd"
+                    app:layout_constraintBottom_toBottomOf="@+id/etEnd"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_back3"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="14dp"
+            android:padding="10dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_700"
+            android:text="@string/route_map"
+            android:layout_marginTop="26dp"
+            android:textColor="@color/cl_text_464646"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="28dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_back3"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="14dp"
+            android:visibility="invisible"
+            android:padding="10dp"/>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -177,5 +195,4 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

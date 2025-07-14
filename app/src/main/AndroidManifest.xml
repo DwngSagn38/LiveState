@@ -47,8 +47,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.route_map.RouteMapActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true" />
         <activity
             android:name=".ui.earth3d.TheEarthActivity"
             android:exported="false" />

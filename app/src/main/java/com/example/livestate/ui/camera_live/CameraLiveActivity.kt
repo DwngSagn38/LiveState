@@ -30,13 +30,17 @@ class CameraLiveActivity : BaseActivity<ActivityCameraLiveBinding>() {
 
     private lateinit var adapter : CameraLiveAdapter
     private lateinit var listCameraLive: List<CameraLiveModel>
+    private lateinit var listCameraLiveHot: List<CameraLiveModel>
+    private var filtered: List<CameraLiveModel> = listOf()
     private var address : String = ""
+    private var isHot : Boolean = false
     override fun setViewBinding(): ActivityCameraLiveBinding {
         return ActivityCameraLiveBinding.inflate(layoutInflater)
     }
 
     override fun initView() {
         listCameraLive = DataApp.getListCameraLive(this)
+        listCameraLiveHot = DataApp.getListCameraLive(this).filter { it.hot }
         setListCameraLive(listCameraLive)
     }
 
@@ -44,21 +48,25 @@ class CameraLiveActivity : BaseActivity<ActivityCameraLiveBinding>() {
         binding.apply {
             imgBack.tap { finish() }
             btnNearYou.tap {
-                listCameraLive = DataApp.getListCameraLive(this@CameraLiveActivity)
-                setListCameraLive(listCameraLive)
+                isHot = false
+                applyFilter()
+
                 btnNearYou.setBackgroundResource(R.drawable.bg_camera_btn_select)
                 btnHotSearch.setBackgroundResource(R.drawable.bg_camera_btn)
                 btnNearYou.setTextColor(Color.WHITE)
                 btnHotSearch.setTextColor(Color.parseColor("#457CBB"))
             }
+
             btnHotSearch.tap {
-                listCameraLive = DataApp.getListCameraLive(this@CameraLiveActivity).filter { it.hot }
-                setListCameraLive(listCameraLive)
+                isHot = true
+                applyFilter()
+
                 btnHotSearch.setBackgroundResource(R.drawable.bg_camera_btn_select)
                 btnNearYou.setBackgroundResource(R.drawable.bg_camera_btn)
                 btnHotSearch.setTextColor(Color.WHITE)
                 btnNearYou.setTextColor(Color.parseColor("#457CBB"))
             }
+
 
             edtSearch.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE || (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
@@ -73,8 +81,8 @@ class CameraLiveActivity : BaseActivity<ActivityCameraLiveBinding>() {
 
             edtSearch.addTextChangedListener { text: Editable? ->
                 val query = text.toString().trim().lowercase()
-                val allPlaces = DataApp.getListCameraLive(this@CameraLiveActivity)
-                val filtered = if (query.isEmpty()) {
+                val allPlaces = if (!isHot) listCameraLive else listCameraLiveHot
+                filtered = if (query.isEmpty()) {
                     allPlaces
                 } else {
                     allPlaces.filter { it.title.lowercase().contains(query) }
@@ -97,6 +105,23 @@ class CameraLiveActivity : BaseActivity<ActivityCameraLiveBinding>() {
     override fun onStop() {
         super.onStop()
     }
+
+    private fun applyFilter() {
+        val query = binding.edtSearch.text.toString().trim().lowercase()
+        val sourceList = if (isHot) listCameraLiveHot else listCameraLive
+
+        filtered = if (query.isEmpty()) {
+            sourceList
+        } else {
+            sourceList.filter { it.title.lowercase().contains(query) }
+        }
+
+        setListCameraLive(filtered)
+
+        binding.tvNotFound.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
+        binding.rcvCameraLive.visibility = if (filtered.isEmpty()) View.GONE else View.VISIBLE
+    }
+
 
     private fun setListCameraLive(list: List<CameraLiveModel>) {
         adapter = CameraLiveAdapter { camera ->
