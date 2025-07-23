@@ -120,4 +120,7 @@
     <string name="stop">Stop</string>
     <string name="loading">Loading</string>
     <string name="address_location">138.8829042, -177.0163517</string>
+    <string name="point_start">Point start</string>
+    <string name="point_end">Point End</string>
+
 </resources>

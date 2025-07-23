@@ -123,4 +123,6 @@
     <string name="stop">Dừng</string>
     <string name="loading">Đang tải</string>
     <string name="address_location">138.8829042, -177.0163517</string>
+    <string name="point_start">Điểm bắt đầu</string>
+    <string name="point_end">Điểm kết thúc</string>
 </resources>

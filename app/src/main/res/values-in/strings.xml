@@ -123,4 +123,6 @@
     <string name="stop">Berhenti</string>
     <string name="loading">Memuat</string>
     <string name="address_location">138.8829042, -177.0163517</string>
+    <string name="point_start">Titik awal</string>
+    <string name="point_end">Titik akhir</string>
 </resources>

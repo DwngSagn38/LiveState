@@ -86,7 +86,7 @@
                     android:id="@+id/etStart"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="Nhập địa điểm bắt đầu"
+                    android:hint="@string/cancel"
                     android:background="@drawable/bg_btn_edittext"
                     app:layout_constraintStart_toEndOf="@+id/imgDistance"
                     app:layout_constraintTop_toBottomOf="@+id/tvDistance"

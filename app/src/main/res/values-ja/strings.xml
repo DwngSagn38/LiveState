@@ -123,4 +123,6 @@
     <string name="stop">停止</string>
     <string name="loading">読み込み中</string>
     <string name="address_location">138.8829042, -177.0163517</string>
+    <string name="point_start">開始地点</string>
+    <string name="point_end">終了地点</string>
 </resources>

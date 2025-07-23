@@ -124,4 +124,6 @@
     <string name="stop">रुकें</string>
     <string name="loading">लोड हो रहा है...</string>
     <string name="address_location">138.8829042, -177.0163517</string>
+    <string name="point_start">प्रारंभ बिंदु</string>
+    <string name="point_end">अंत बिंदु</string>
 </resources>

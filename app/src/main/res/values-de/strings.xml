@@ -123,4 +123,6 @@
     <string name="stop">Stopp</string>
     <string name="loading">Lädt...</string>
     <string name="address_location">138.8829042, -177.0163517</string>
+    <string name="point_start">Startpunkt</string>
+    <string name="point_end">Endpunkt</string>
 </resources>
